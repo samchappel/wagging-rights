@@ -5,24 +5,6 @@ from sqlalchemy.ext.declarative import declarative_base
 
 Base = declarative_base()
 
-class Owner(Base):
-    __tablename__ = 'owners'
-    __table_args__ (PrimaryKeyConstraint('id'),)
-
-    id = Column(Integer())
-    name = Column(String())
-    address = Column(String())
-    phone = Column(Integer())
-    email = Column(String())
-
-    pets = relationship('Pet', backref=backref('pet'))
-
-    def __repr__(self):
-        return f"Id: {self.id}, " \
-            + f"Name:{self.name}, " \
-            + f"Email: {self.email}, "\
-            + f"Phone: {self.phone}, "\
-            + f"Address: {self.address}"
 
 class Pets(Base):
     __tablename__ = 'pets'
@@ -43,7 +25,26 @@ class Pets(Base):
             + f"Name:{self.name}, " \
             + f"Species: {self.species}, "\
             + f"Breed: {self.breed}, "\
-            + f"Temperament: {self.temperament}"
+            + f"Temperament: {self.temperament}"\
+
+class Owner(Base):
+    __tablename__ = 'owners'
+    __table_args__= (PrimaryKeyConstraint('id'),)
+
+    id = Column(Integer())
+    name = Column(String())
+    address = Column(String())
+    phone = Column(Integer())
+    email = Column(String())
+
+    pets = relationship('Pet', backref=backref('pet'))
+
+    def __repr__(self):
+        return f"Id: {self.id}, "\
+            + f"Name:{self.name}, "\
+            + f"Email: {self.email}, "\
+            + f"Phone: {self.phone}, "\
+            + f"Address: {self.address}"\
 
 class Provider(Base):
     __tablename__ = 'providers'
@@ -51,16 +52,17 @@ class Provider(Base):
 
     id = Column(Integer())
     name = Column(String())
+    availability = Column(String()) #how can we show availability?
     email = Column(String())
     phone = Column(Integer())
     hourly_rate = Column(Float())
 
     def __repr__(self):
-        return f"Id: {self.id}, " \
-            + f"Name:{self.name}, " \
+        return f"Id: {self.id}, "\
+            + f"Name:{self.name}, "\
             + f"Email: {self.email}, "\
             + f"Phone: {self.phone}, "\
-            + f"Hourly Rate: {self.hourly_rate}"
+            + f"Hourly Rate: {self.hourly_rate}" #ask Sam what she thinks on a practical standpoint
 
 class Service(Base):
     __tablename__ = 'services'
@@ -73,7 +75,19 @@ class Service(Base):
     start_date = Column(DateTime())
     end_date = Column(DateTime())
     status = Column(String())
-    fee = Column(Float())
+    fee = Column(Float()) #total cost
     notes = Column(String())
+
+    pet = relationship('Pet', backref=backref('pets'))
+    provider = relationship('Provider', backref=backref('providers'))
+
+    def __repr__(self):
+        return f"Id: {self.id}, "\
+            +f"Appointment: {self.appointment}, "\
+            +f"Start Date: {self.start_date}, "\
+            +f"End Date: {self.end_date}, "\
+            +f"Status: {self.status}, "\
+            +f"Fee: {self.fee}, "\
+            +f"Notes: {self.notes}, "\
 
 
