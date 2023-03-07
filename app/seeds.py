@@ -54,7 +54,7 @@ if __name__ == '__main__':
             )
 
             session.add(pet)
-            session.commit()
+            session.commit() #sets the change/saves
 
             pets.append(pet)
 
