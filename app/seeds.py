@@ -75,7 +75,7 @@ if __name__ == '__main__':
                 name = f"{fake.first_name()} {fake.last_name()}",
                 email = fake.email(),
                 phone = random.randint(1000000000, 9999999999),
-                hourly_rate = f'%.2f' % random.uniform(20,40),
+                hourly_rate = f'$' + f'%.2f' % random.uniform(20,40),
                 availability = fake.day_of_week()
             )
 

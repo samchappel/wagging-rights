@@ -1,5 +1,5 @@
 from sqlalchemy import create_engine, func
-from sqlalchemy import (PrimaryKeyConstraint, Table, Column, String, Integer, Float, DateTime, ForeignKey)
+from sqlalchemy import (PrimaryKeyConstraint, Table, Column, String, Integer, DateTime, ForeignKey)
 from sqlalchemy.orm import relationship, backref
 from sqlalchemy.ext.declarative import declarative_base
 
@@ -25,7 +25,6 @@ class Pet(Base):
     def __repr__(self):
         return f"Id: {self.id}, " \
             + f"Name:{self.name}, " \
-            + f"Species: {self.species}, "\
             + f"Breed: {self.breed}, "\
             + f"Temperament: {self.temperament}"\
             + f"Owner ID: {self.owner_id}"
@@ -58,7 +57,7 @@ class Provider(Base):
     availability = Column(String()) #how can we show availability?
     email = Column(String())
     phone = Column(Integer())
-    hourly_rate = Column(Float())
+    hourly_rate = Column(String())
 
     def __repr__(self):
         return f"Id: {self.id}, "\
@@ -78,7 +77,7 @@ class Service(Base):
     request = Column(String()) #make appointment for dog-walking, drop-ins, or house-sitting
     start_date = Column(DateTime())
     end_date = Column(DateTime())
-    fee = Column(Float()) #total cost
+    fee = Column(String()) #total cost
     notes = Column(String())
 
     pet = relationship('Pet', backref=backref('pets'))
