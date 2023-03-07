@@ -1,8 +1,21 @@
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
+import random
+from datetime import datetime, timedelta
 
-from models import Pet, Owner, Provider, Service
+from models import Pet, Owner, Provider, Service, Base
+from faker import Faker
 
+# from faker import Faker
+# import random
+
+# from sqlalchemy import create_engine
+# from sqlalchemy.orm import sessionmaker
+
+# from models import (Pet, Owner, Service, Provider)
+
+
+fake = Faker()
 if __name__ == '__main__':
     engine = create_engine('sqlite:///wagging_rights.db')
     Base.metadata.create_all(engine)
@@ -10,6 +23,29 @@ if __name__ == '__main__':
     Session = sessionmaker(bind=engine)
     session = Session()
 
+    start_date = fake.date_time_between(start_date="-1y", end_date="now", tzinfo=None)
+    print(f"Start date: {start_date.strftime('%B %d, %Y')}")
+
+    end_date = start_date + timedelta(days=random.randint(1, 7))
+    print(f"End date: {end_date.strftime('%B %d, %Y')}")
+    # end_date = fake.date_time_between_dates(start_date=start_date, end_date=start_date+timedelta(days=random.randint(1, 7)))
+    # print(f"End date: {end_date.strftime('%d-%m-%Y')}")
+
+    # while end_date < start_date:
+    #     end_date = start_date + timedelta(days=random.randint(1, 7))
+
+    # service = Service(
+    #     request = random.choice(requests),
+    #     start_date = start_date,
+    #     end_date = end_date,
+    #     notes=fake.sentence(),
+    #     fee = provider.hourly_rate,
+    #     provider_id = provider.id,
+    #     pet_id = random.choice(pets).id
+    # )
+
+# start_date = fake.date_time_between(start_date='now', end_date='+7d')
+# end_date = fake.date_time_between_dates(start_date=start_date, end_date=start_date+timedelta(days=random.randint(1, 7)))
 
     # Getting an Owner's Pets
 

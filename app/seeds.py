@@ -1,5 +1,6 @@
 from faker import Faker
 import random
+from datetime import datetime, timedelta
 
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
@@ -23,6 +24,12 @@ if __name__ == '__main__':
     owners = []
 
     temperaments = ["Assertive or Aggressive", "Neutral", "Passive"]
+
+    # start_date = fake.date_time_between(start_date="-1y", end_date="now", tzinfo=None)
+    # # print(f"Start date: {start_date.strftime('%B %d, %Y')}")
+
+    # end_date = start_date + timedelta(days=random.randint(1, 7))
+    # # print(f"End date: {end_date.strftime('%B %d, %Y')}")
 
     for _ in range(30):
         owner = Owner(
@@ -87,10 +94,10 @@ if __name__ == '__main__':
             for _ in range(random.randint(1,10)):
                 service = Service(
                     request = random.choice(requests),
-                    start_date = fake.date_this_year(),
-                    end_date = fake.date_this_year(),
+                    start_date = fake.date_time_between(start_date="-1y", end_date="now", tzinfo=None),
+                    end_date = fake.date_time_between(start_date="-1y", end_date="now", tzinfo=None) + timedelta(days=random.randint(1, 7)),
                     notes=fake.sentence(),
-                fee = provider.hourly_rate,
+                    fee = provider.hourly_rate,
                     provider_id = provider.id,
                     pet_id = random.choice(pets).id
                 )
