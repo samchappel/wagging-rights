@@ -96,7 +96,6 @@ if __name__ == '__main__':
                 service = Service(
                     request = random.choice(requests),
                     start_date = date,
-
                     end_date = date + timedelta(days=random.randint(1, 7)),
                     notes=fake.sentence(),
                     fee = provider.hourly_rate,
