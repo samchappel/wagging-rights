@@ -30,31 +30,34 @@ __          __     _____  _____ _____ _   _  _____   _____  _____ _____ _    _ _
 
 ''')
 
-    print('Hello! Welcome to the Wagging Rights CLI!')
-    print('Here is a list of available services:')
-    stores = session.query(Store)
-    create_store_table(stores)
 
-    # Get a choice of store, retrieve an object from the DB
-    store= None
-    while not store:
-        store_id = input('Please enter the ID of the service that you wish to select: ')
-        store = session.query(Store).filter(Store.id == store_id).one_or_none()
 
-    # Display list of items at the store
-    print('Here is a list of our services:')
-    create_service_item_table(store)
 
-    # Start adding items to cart
-    shopping_cart, cart_total = fill_cart(session, store)
-    print('Here are the services in your cart:')
-    show_cart(shopping_cart)
+    # print('Hello! Welcome to the Wagging Rights CLI!')
+    # print('Here is a list of available services:')
+    # stores = session.query(Store)
+    # create_store_table(stores)
 
-    # Remove unwatned items from cart
-    remove_from_cart(session, shopping_cart, cart_total)
+    # # Get a choice of store, retrieve an object from the DB
+    # store= None
+    # while not store:
+    #     store_id = input('Please enter the ID of the service that you wish to select: ')
+    #     store = session.query(Store).filter(Store.id == store_id).one_or_none()
 
-    #Collect payment
-    print(f'Your total is ${cart_total:.2f}\n')
-    collect_payment(cart_total)
+    # # Display list of items at the store
+    # print('Here is a list of our services:')
+    # create_service_item_table(store)
 
-    print('Thank you for using the Wagging Rights CLI!\n ')
+    # # Start adding items to cart
+    # shopping_cart, cart_total = fill_cart(session, store)
+    # print('Here are the services in your cart:')
+    # show_cart(shopping_cart)
+
+    # # Remove unwatned items from cart
+    # remove_from_cart(session, shopping_cart, cart_total)
+
+    # #Collect payment
+    # print(f'Your total is ${cart_total:.2f}\n')
+    # collect_payment(cart_total)
+
+    # print('Thank you for using the Wagging Rights CLI!\n ')

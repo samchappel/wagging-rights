@@ -14,6 +14,8 @@ if __name__ == '__main__':
 
     session.query(Pet).delete()
     session.query(Owner).delete()
+    session.query(Provider).delete()
+    session.query(Service).delete()
 
     fake = Faker()
 
@@ -75,8 +77,8 @@ if __name__ == '__main__':
                 name = f"{fake.first_name()} {fake.last_name()}",
                 email = fake.email(),
                 phone = random.randint(1000000000, 9999999999),
-                hourly_rate = f'$' + f'%.2f' % random.uniform(20,40),
                 availability = fake.day_of_week()
+                # hourly_rate = f'$' + f'%.2f' % random.uniform(20,40),
             )
 
 
@@ -97,7 +99,7 @@ if __name__ == '__main__':
                     start_date = fake.date_time_between(start_date="-1y", end_date="now", tzinfo=None),
                     end_date = fake.date_time_between(start_date="-1y", end_date="now", tzinfo=None) + timedelta(days=random.randint(1, 7)),
                     notes=fake.sentence(),
-                    fee = provider.hourly_rate,
+                    fee = f'$' + f'%.2f' % random.uniform(20,40),
                     provider_id = provider.id,
                     pet_id = random.choice(pets).id
                 )

@@ -57,15 +57,15 @@ class Provider(Base):
     availability = Column(String()) #how can we show availability?
     email = Column(String())
     phone = Column(Integer())
-    hourly_rate = Column(String())
+    # hourly_rate = Column(String())
 
     def __repr__(self):
         return f"Id: {self.id}, "\
             + f"Name:{self.name}, "\
             + f"Email: {self.email}, "\
             + f"Phone: {self.phone}, "\
-            + f"Hourly Rate: {self.hourly_rate}"\
             + f"Availability: {self.availability}"\
+            # + f"Hourly Rate: {self.hourly_rate}"\
 
 class Service(Base):
     __tablename__ = 'services'
