@@ -68,7 +68,8 @@ if __name__ == '__main__':
                 name = f"{fake.first_name()} {fake.last_name()}",
                 email = fake.email(),
                 phone = random.randint(1000000000, 9999999999),
-                hourly_rate = random.uniform(20, 40)
+                hourly_rate = random.uniform(20, 40),
+                availability = fake.day_of_week()
             )
 
 
@@ -89,7 +90,7 @@ if __name__ == '__main__':
                     start_date = fake.date_this_year(),
                     end_date = fake.date_this_year(),
                     notes=fake.sentence(),
-                    fee = provider.hourly_rate,
+                fee = provider.hourly_rate,
                     provider_id = provider.id,
                     pet_id = random.choice(pets).id
                 )

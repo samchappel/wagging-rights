@@ -3,6 +3,8 @@ from sqlalchemy import (PrimaryKeyConstraint, Table, Column, String, Integer, Fl
 from sqlalchemy.orm import relationship, backref
 from sqlalchemy.ext.declarative import declarative_base
 
+engine = create_engine('sqlite:///sqlalchemy.sqlite', echo=True)
+
 Base = declarative_base()
 
 
@@ -37,7 +39,6 @@ class Owner(Base):
     address = Column(String())
     phone = Column(Integer())
     email = Column(String())
-    hourly_rate = Column(Float())
 
     pets = relationship('Pet', backref=backref('pet'))
 
@@ -54,7 +55,7 @@ class Provider(Base):
 
     id = Column(Integer())
     name = Column(String())
-    availability = Column(DateTime()) #how can we show availability?
+    availability = Column(String()) #how can we show availability?
     email = Column(String())
     phone = Column(Integer())
     hourly_rate = Column(Float())
@@ -64,7 +65,8 @@ class Provider(Base):
             + f"Name:{self.name}, "\
             + f"Email: {self.email}, "\
             + f"Phone: {self.phone}, "\
-            + f"Hourly Rate: {self.hourly_rate}" #ask Sam what she thinks on a practical standpoint
+            + f"Hourly Rate: {self.hourly_rate}"\
+            + f"Availability: {self.availability}"\
 
 class Service(Base):
     __tablename__ = 'services'
