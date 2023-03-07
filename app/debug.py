@@ -1,7 +1,7 @@
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 
-from models import (User, Owner, Pet, Job, Handler)
+from models import Pet, Owner, Provider, Service
 
 if __name__ == '__main__':
     engine = create_engine('sqlite:///wagging_rights.db')

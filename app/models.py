@@ -1,12 +1,12 @@
-from sqlalchemy import (PrimaryKeyConstraint, Column, String, Integer, Float, DateTime, ForeignKey)
-
-# from sqlalchemy.orm import relationship, backref
+from sqlalchemy import create_engine, func
+from sqlalchemy import (PrimaryKeyConstraint, Table, Column, String, Integer, Float, DateTime, ForeignKey)
+from sqlalchemy.orm import relationship, backref
 from sqlalchemy.ext.declarative import declarative_base
 
 Base = declarative_base()
 
 
-class Pets(Base):
+class Pet(Base):
     __tablename__ = 'pets'
     __table_args__ = (PrimaryKeyConstraint('id'),)
 
@@ -38,7 +38,7 @@ class Owner(Base):
     phone = Column(Integer())
     email = Column(String())
 
-    # pets = relationship('Pet', backref=backref('pet'))
+    pets = relationship('Pet', backref=backref('pet'))
 
     def __repr__(self):
         return f"Id: {self.id}, "\
@@ -79,8 +79,8 @@ class Service(Base):
     fee = Column(Float()) #total cost
     notes = Column(String())
 
-    # pet = relationship('Pet', backref=backref('pets'))
-    # provider = relationship('Provider', backref=backref('providers'))
+    pet = relationship('Pet', backref=backref('pets'))
+    provider = relationship('Provider', backref=backref('providers'))
 
     def __repr__(self):
         return f"Id: {self.id}, "\
