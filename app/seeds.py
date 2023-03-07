@@ -92,7 +92,7 @@ if __name__ == '__main__':
         for provider in providers:
 
             for _ in range(random.randint(1,10)):
-                date = fake.date_time_between(start_date="-1y", end_date="now", tzinfo=None)
+                date = fake.date_time_between(start_date="now", end_date="+1yr", tzinfo=None)
                 service = Service(
                     request = random.choice(requests),
                     start_date = date,
