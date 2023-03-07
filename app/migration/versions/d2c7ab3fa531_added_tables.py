@@ -30,7 +30,7 @@ def upgrade() -> None:
     op.create_table('providers',
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('name', sa.String(), nullable=True),
-    sa.Column('availability', sa.String(), nullable=True),
+    sa.Column('availability', sa.DateTime(), nullable=False),
     sa.Column('email', sa.String(), nullable=True),
     sa.Column('phone', sa.Integer(), nullable=True),
     sa.Column('hourly_rate', sa.Float(), nullable=True),

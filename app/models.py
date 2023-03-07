@@ -54,7 +54,7 @@ class Provider(Base):
 
     id = Column(Integer())
     name = Column(String())
-    availability = Column(String()) #how can we show availability?
+    availability = Column(DateTime()) #how can we show availability?
     email = Column(String())
     phone = Column(Integer())
     hourly_rate = Column(Float())
