@@ -24,7 +24,7 @@ if __name__ == '__main__':
 
     temperaments = ["Assertive or Aggressive", "Neutral", "Passive"]
 
-    for _ in range(20):
+    for _ in range(30):
         owner = Owner(
             name = f"{fake.first_name()} {fake.last_name()}",
             email = fake.email(),
@@ -42,7 +42,6 @@ if __name__ == '__main__':
     for owner in owners:
 
         for _ in range (random.randint(1,3)):
-            rand_species = random.choice(species)
 
             pet = Pet(
                 name = fake.name(),
@@ -50,5 +49,52 @@ if __name__ == '__main__':
                 breed = random.choice(dog_breeds),
                 temperament = random.choice(temperaments),
                 favorite_treat = random.choice(favorite_treats),
-                special_needs = 
+                notes = fake.sentence(),
+                owner_id = owner.id
             )
+
+            session.add(pet)
+            session.commit()
+
+            pets.append(pet)
+
+        session.query(Job).delete()
+        session.query(Handler).delete()
+
+        providers = []
+
+        for _ in range (5):
+            provider = Provider(
+                name = f"{fake.first_name()} {fake.last_name()}",
+                email = fake.email(),
+                phone = random.randint(1000000000, 9999999999),
+                hourly_rate = random.uniform(20, 40)
+            )
+
+
+            sesion.add(provider)
+            session.commit()
+
+            providers.append(provider)
+
+        request = ['Walk', 'Drop-in', 'House-Sit']
+
+        services = []
+
+        for provider in providers:
+
+            for _ in range(random.randit(1,10)):
+                service = Service(
+                    request = random.choice(requests),
+                    start_date = fake.date_this_year(),
+                    end_date = fake.date_this_year(),
+                    notes=fake.sentence(),
+                    fee = provider.hourly_rate,
+                    provider_id = provider.id,
+                    pet_id = random.choice(pets).id
+                )
+            services.append(service)
+
+    session.bulk_save_objects()
+    session.commit()
+    session.close()

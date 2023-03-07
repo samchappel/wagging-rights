@@ -16,7 +16,7 @@ class Pet(Base):
     breed = Column(String())
     temperament = Column(String())
     favorite_treats = Column(String())
-    special_needs = Column(String())
+    notes = Column(String())
 
     owner_id = Column(Integer(), ForeignKey('owners.id'))
 
@@ -37,6 +37,7 @@ class Owner(Base):
     address = Column(String())
     phone = Column(Integer())
     email = Column(String())
+    hourly_rate = Column(Float())
 
     pets = relationship('Pet', backref=backref('pet'))
 
@@ -72,7 +73,7 @@ class Service(Base):
     id = Column(Integer())
     pet_id = Column(Integer(), ForeignKey('pets.id'))
     provider_id = Column(Integer(), ForeignKey('providers.id'))
-    appointment = Column(String()) #make appointment for dog-walking, drop-ins, or house-sitting
+    request = Column(String()) #make appointment for dog-walking, drop-ins, or house-sitting
     start_date = Column(DateTime())
     end_date = Column(DateTime())
     status = Column(String())
@@ -84,10 +85,9 @@ class Service(Base):
 
     def __repr__(self):
         return f"Id: {self.id}, "\
-            +f"Appointment: {self.appointment}, "\
+            +f"Request: {self.request}, "\
             +f"Start Date: {self.start_date}, "\
             +f"End Date: {self.end_date}, "\
-            +f"Status: {self.status}, "\
             +f"Fee: {self.fee}, "\
             +f"Notes: {self.notes}, "\
 
