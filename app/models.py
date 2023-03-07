@@ -1,6 +1,6 @@
 from sqlalchemy import (PrimaryKeyConstraint, Column, String, Integer, Float, DateTime, ForeignKey)
 
-from sqlalchemy.orm import relationship, backref
+# from sqlalchemy.orm import relationship, backref
 from sqlalchemy.ext.declarative import declarative_base
 
 Base = declarative_base()
@@ -8,7 +8,7 @@ Base = declarative_base()
 
 class Pets(Base):
     __tablename__ = 'pets'
-    __table_args__ = (PrimaryKeyConstraint('id'),)
+    __table_args__ = (PrimaryKeyConstraint('id'))
 
     id = Column(Integer())
     name = Column(String())
@@ -18,7 +18,7 @@ class Pets(Base):
     favorite_treats = Column(String())
     special_needs = Column(String())
 
-    owner_id = Column(Integer(), ForeignKey(owners.id))
+    owner_id = Column(Integer(), ForeignKey('owners.id'))
 
     def __repr__(self):
         return f"Id: {self.id}, " \
