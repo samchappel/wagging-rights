@@ -1,8 +1,8 @@
-"""empty
+"""adding classes
 
-Revision ID: 27e650df3a9a
+Revision ID: dab48120a30b
 Revises: 
-Create Date: 2023-03-07 00:27:17.897239
+Create Date: 2023-03-07 15:50:17.787258
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = '27e650df3a9a'
+revision = 'dab48120a30b'
 down_revision = None
 branch_labels = None
 depends_on = None

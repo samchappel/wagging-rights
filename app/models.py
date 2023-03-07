@@ -3,7 +3,7 @@ from sqlalchemy import (PrimaryKeyConstraint, Table, Column, String, Integer, Da
 from sqlalchemy.orm import relationship, backref
 from sqlalchemy.ext.declarative import declarative_base
 
-engine = create_engine('sqlite:///sqlalchemy.sqlite', echo=True)
+engine = create_engine('sqlite:///wagging_rights.db', echo=True)
 
 Base = declarative_base()
 
