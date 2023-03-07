@@ -1,8 +1,8 @@
-"""Added Models
+"""added tables
 
-Revision ID: 03afa55f1f93
+Revision ID: d2c7ab3fa531
 Revises: 
-Create Date: 2023-03-06 17:23:27.207555
+Create Date: 2023-03-06 21:48:02.294999
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = '03afa55f1f93'
+revision = 'd2c7ab3fa531'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -24,6 +24,7 @@ def upgrade() -> None:
     sa.Column('address', sa.String(), nullable=True),
     sa.Column('phone', sa.Integer(), nullable=True),
     sa.Column('email', sa.String(), nullable=True),
+    sa.Column('hourly_rate', sa.Float(), nullable=True),
     sa.PrimaryKeyConstraint('id')
     )
     op.create_table('providers',
@@ -42,7 +43,7 @@ def upgrade() -> None:
     sa.Column('breed', sa.String(), nullable=True),
     sa.Column('temperament', sa.String(), nullable=True),
     sa.Column('favorite_treats', sa.String(), nullable=True),
-    sa.Column('special_needs', sa.String(), nullable=True),
+    sa.Column('notes', sa.String(), nullable=True),
     sa.Column('owner_id', sa.Integer(), nullable=True),
     sa.ForeignKeyConstraint(['owner_id'], ['owners.id'], ),
     sa.PrimaryKeyConstraint('id')
@@ -51,7 +52,7 @@ def upgrade() -> None:
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('pet_id', sa.Integer(), nullable=True),
     sa.Column('provider_id', sa.Integer(), nullable=True),
-    sa.Column('appointment', sa.String(), nullable=True),
+    sa.Column('request', sa.String(), nullable=True),
     sa.Column('start_date', sa.DateTime(), nullable=True),
     sa.Column('end_date', sa.DateTime(), nullable=True),
     sa.Column('status', sa.String(), nullable=True),

@@ -4,7 +4,7 @@ import random
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 
-from models import Pet, Owner, Service, Provider
+from models import (Pet, Owner, Service, Provider)
 
 if __name__ == '__main__':
     engine = create_engine('sqlite:///wagging_rights.db')
@@ -44,11 +44,11 @@ if __name__ == '__main__':
         for _ in range (random.randint(1,3)):
 
             pet = Pet(
-                name = fake.name(),
-                age = fake.age(),
+                name = fake.first_name(),
+                age = random.randint(1,10),
                 breed = random.choice(dog_breeds),
                 temperament = random.choice(temperaments),
-                favorite_treat = random.choice(favorite_treats),
+                favorite_treats = random.choice(favorite_treats),
                 notes = fake.sentence(),
                 owner_id = owner.id
             )
@@ -58,8 +58,8 @@ if __name__ == '__main__':
 
             pets.append(pet)
 
-        session.query(Job).delete()
-        session.query(Handler).delete()
+        session.query(Service).delete()
+        session.query(Provider).delete()
 
         providers = []
 
@@ -72,18 +72,18 @@ if __name__ == '__main__':
             )
 
 
-            sesion.add(provider)
+            session.add(provider)
             session.commit()
 
             providers.append(provider)
 
-        request = ['Walk', 'Drop-in', 'House-Sit']
+        requests = ['Walk', 'Drop-in', 'House-Sit']
 
         services = []
 
         for provider in providers:
 
-            for _ in range(random.randit(1,10)):
+            for _ in range(random.randint(1,10)):
                 service = Service(
                     request = random.choice(requests),
                     start_date = fake.date_this_year(),
@@ -95,6 +95,6 @@ if __name__ == '__main__':
                 )
             services.append(service)
 
-    session.bulk_save_objects()
+    session.bulk_save_objects(services)
     session.commit()
     session.close()
