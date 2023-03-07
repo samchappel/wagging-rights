@@ -78,7 +78,6 @@ class Service(Base):
     request = Column(String()) #make appointment for dog-walking, drop-ins, or house-sitting
     start_date = Column(DateTime())
     end_date = Column(DateTime())
-    status = Column(String())
     fee = Column(Float()) #total cost
     notes = Column(String())
 

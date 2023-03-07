@@ -63,7 +63,7 @@ if __name__ == '__main__':
 
         providers = []
 
-        for _ in range (5):
+        for _ in range(10):
             provider = Provider(
                 name = f"{fake.first_name()} {fake.last_name()}",
                 email = fake.email(),
