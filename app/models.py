@@ -8,7 +8,7 @@ Base = declarative_base()
 
 class Pets(Base):
     __tablename__ = 'pets'
-    __table_args__ = (PrimaryKeyConstraint('id'))
+    __table_args__ = (PrimaryKeyConstraint('id'),)
 
     id = Column(Integer())
     name = Column(String())
@@ -26,6 +26,7 @@ class Pets(Base):
             + f"Species: {self.species}, "\
             + f"Breed: {self.breed}, "\
             + f"Temperament: {self.temperament}"\
+            + f"Owner ID: {self.owner_id}"
 
 class Owner(Base):
     __tablename__ = 'owners'
@@ -37,7 +38,7 @@ class Owner(Base):
     phone = Column(Integer())
     email = Column(String())
 
-    pets = relationship('Pet', backref=backref('pet'))
+    # pets = relationship('Pet', backref=backref('pet'))
 
     def __repr__(self):
         return f"Id: {self.id}, "\
@@ -78,8 +79,8 @@ class Service(Base):
     fee = Column(Float()) #total cost
     notes = Column(String())
 
-    pet = relationship('Pet', backref=backref('pets'))
-    provider = relationship('Provider', backref=backref('providers'))
+    # pet = relationship('Pet', backref=backref('pets'))
+    # provider = relationship('Provider', backref=backref('providers'))
 
     def __repr__(self):
         return f"Id: {self.id}, "\
