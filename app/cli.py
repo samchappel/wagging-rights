@@ -67,7 +67,7 @@ __          __     _____  _____ _____ _   _  _____   _____  _____ _____ _    _ _
                     print("Invalid ID. Please enter a valid ID.")
                     continue
                 for pet in pets:
-                    field = input(f"What updates would you like to make for {pet.name}? Enter 'name', 'age', 'breed', 'temperament', 'treats', or 'notes' to make changes to {pet.name}'s record: ").lower()
+                    field = input(f"What updates would you like to make for {pet.name}? Enter 'name', 'age', 'breed', 'temperament', 'treats', or 'notes' to make those changes to {pet.name}'s record: ").lower()
                     if field not in ['name', 'age', 'breed', 'temperament', 'treats', 'notes']:
                         print("Invalid field. Please enter a valid field.")
                         continue
@@ -92,14 +92,3 @@ __          __     _____  _____ _____ _   _  _____   _____  _____ _____ _    _ _
         print("Yay, you chose 'appointments'! This feature is coming soon.")
     else:
         print("Invalid input.")
-
-    
-
-    
-
-
-
-    
-
-    
-
