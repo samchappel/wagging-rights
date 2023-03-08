@@ -55,8 +55,27 @@ __          __     _____  _____ _____ _   _  _____   _____  _____ _____ _    _ _
 
         if option == "add":
             # BIANCA - Write your code here! :-)
-            print("You're adding a pet!")
-            
+            add = True
+            while add:
+                print("Please provide some information about your new pet.")
+                name = input("Name: ")
+                age = int(input("Age: "))
+                breed = input("Breed: ")
+                temperament = input("Temperament: ")
+                treats = input("Favorite Treats: ")
+                notes = input("Additional Notes/Special Needs: ")
+                new_pet = Pet(name=name, age=age, breed=breed, 
+                              temperament=temperament, favorite_treats=treats, notes=notes, owner_id=owner_id)
+                session.add(new_pet)
+                session.commit()
+                new_db_pet = session.query(Pet).filter(Pet.id == new_pet.id).first()
+                print("Thank you for your submission. Here is the information we received:")
+                print(new_db_pet)
+                another = input("Would you like to add another pet? Yes/No: ").lower()
+                if another == "no":
+                    print("Routing you back to the main menu...")
+                    add = False
+        
         elif option == "update":
             # SAM - Write your code here! :-)
             print("You're updating a pet!")
