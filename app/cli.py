@@ -3,8 +3,8 @@
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 
-from models import Store
-from helpers import (create_store_table, create_wagging_rights_item_table, fill_cart, show_cart, remove_from_cart, collect_payment)
+# from models import Store
+# from helpers import (create_store_table, create_wagging_rights_item_table, fill_cart, show_cart, remove_from_cart, collect_payment)
 
 engine = create_engine('sqlite:///wagging_rights.db')
 session = sessionmaker(bind=engine)()
