@@ -43,18 +43,39 @@ __          __     _____  _____ _____ _   _  _____   _____  _____ _____ _    _ _
     # If 'Pets' bring user to 'Main Menu' pets.
     if task == "pets":
         print("Here are your pets:")
+
+    # Use owner_id to query Pets table and return all pets associated with that owner.
         pets = session.query(Pet).filter(Pet.owner_id == owner_id).all()
         for pet in pets:
             print(pet)
         # TODO - We will reformat this printout later.
 
-
-    else:
-        print("Yay, you chose 'appointments'! This feature is coming soon.")
-
-    # Use owner_id to query Pets table and return all pets associated with that owner.
-
     # Prompt user to select from options to Add Pet, Update Pet, Remove Pet
+        option = input("What would you like to do? Enter 'add' to add a pet, 'update' to update a pet, 'remove' to remove a pet: ").lower()
+
+        if option == "add":
+            # BIANCA - Write your code here! :-)
+            print("You're adding a pet!")
+            
+        elif option == "update":
+            # SAM - Write your code here! :-)
+            print("You're updating a pet!")
+
+        elif option == "remove":
+            # TERRENCE - Write your code here! :-)
+            print("You're removing a pet!")
+        else:
+            print("Invalid input.")
+
+
+    elif task == "appointments":
+        print("Yay, you chose 'appointments'! This feature is coming soon.")
+    else:
+        print("Invalid input.")
+
+    
+
+    
 
 
 
