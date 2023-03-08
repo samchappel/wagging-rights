@@ -1,5 +1,39 @@
 from models import Pet 
 
+
+
+def add_new_pet(session, name, age, breed, temperament, treats, notes, owner_id):
+    new_pet = Pet(name=name, age=age, breed=breed, temperament=temperament, 
+                favorite_treats=treats, notes=notes, owner_id=owner_id)
+    session.add(new_pet)
+    session.commit()
+    new_db_pet = session.query(Pet).filter(Pet.id == new_pet.id).first()
+    print('')
+    print('')
+    print("Thank you for your submission! Your pet has been added successfully. \nHere is the information we received:")
+    print('')
+    print(new_db_pet)
+
+
+
+
+# def remove_pet(session, idx):
+
+
+                # session.show(pet)
+                # print('Do You Still Wish To Remove?')
+                # new_db_pet = session.query(Pet).filter(Pet.id == id).first()
+                # print('')
+                # print('')
+                # print('Thank You For Your Submission!')
+                # print('')
+                # print(new_db_pet)
+                # print('Your Pet Has Been Removed Successfully!')
+
+
+
+# from models import Service
+
 def update_pet(session, pet, field, new_value):
     if field == "name":
         pet.name = new_value
