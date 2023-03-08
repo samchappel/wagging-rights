@@ -95,7 +95,7 @@ Would you like to add another pet? Yes/No: """).lower()
 
         elif option == "update":
             update = True
-            while update: 
+            while update:
                 pet_id = input("You've selected update! Enter the ID of the pet you want to update: ")
                 pet = session.query(Pet).filter(Pet.id == pet_id, Pet.owner_id == owner_id).first()
                 if not pet:
@@ -122,27 +122,37 @@ Would you like to add another pet? Yes/No: """).lower()
                 print('')
                 pet_idx = int(input("Please Provide The 'Pet ID' Of The Pet You Wish To Remove: "))
                 pets = session.query(Pet).filter(Pet.id == pet_idx).first()
-
-                print('')
-                print(pets)
-
-                yes_no = input("Do You Wish To Delete This Pet? (Y/n): \n")
-                if yes_no.lower() in YES:
-                    session.delete(pets)
-                    session.commit()
-                    print('Your Pet Has been Removed Successfully!')
-                    rem_another = input('Would you like to remove another pet? (Y/n): \n')
-                    if rem_another.lower() in YES:
-                        continue
-                    elif rem_another.lower() in NO:
-                        print("Routing you back to main menu...")
-                        remove = False
-                    else:
-                        print("Invalid input. Routing you back to main menu...")
-                        remove = False
-
+                if pets.owner_id == owner_id:
+                    print('')
+                    print(pets)
+                    yes_no = input("Do You Wish To Delete This Pet? (Y/n): \n")
+                    if yes_no.lower() in YES:
+                        if pets.owner_id == owner_id:
+                            session.delete(pets)
+                            session.commit()
+                            print('Your Pet Has been Removed Successfully!')
                 else:
-                    print('Pet has not been deleted.')
+                    print('')
+                    print('Please select a valid Pet ID.')
+                    continue
+                rem_another = input('Would you like to remove another pet? (Y/n): \n')
+
+                # yes_no = input("Do You Wish To Delete This Pet? (Y/n): \n")
+                        # rem_another = input('Would you like to remove another pet? (Y/n): \n')
+                    # else:
+                    #     # print('You cannot delete a pet that is not yours.')
+                    #     rem_another = input('Would you like to remove another pet? (Y/n): \n')
+                if rem_another.lower() in YES:
+                    continue
+                elif rem_another.lower() in NO:
+                    print("Routing you back to main menu...")
+                    remove = False
+                else:
+                    print("Invalid input. Routing you back to main menu...")
+                    remove = False
+
+            # else:
+            #     print('Pet has not been deleted.')
 
                     #NEED TO MAKE REMOVE OPTION SO THAT USERS CAN DELETE THEIR OWN PETS ONLY AND NOT OTHER USERS PETS.
                     #Run python seeds.py to restore table data
