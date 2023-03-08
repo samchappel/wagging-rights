@@ -26,9 +26,12 @@ class Pet(Base):
     def __repr__(self):
         return f"Id: {self.id}, \n" \
             + f"Name: {self.name}, \n" \
-            + f"Breed: {self.breed}, \n"\
-            + f"Temperament: {self.temperament}, \n"\
-            + f"Owner ID: {self.owner_id} \n"\
+            + f"Age: {self.age}, \n" \
+            + f"Breed: {self.breed}, \n" \
+            + f"Temperament: {self.temperament}, \n" \
+            + f"Treats: {self.favorite_treats}, \n" \
+            + f"Notes: {self.notes}, \n" \
+            + f"Owner ID: {self.owner_id} \n" \
             + f""
 
 class Owner(Base):
