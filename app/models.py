@@ -7,7 +7,7 @@ engine = create_engine('sqlite:///wagging_rights.db', echo=True)
 
 Base = declarative_base()
 
-
+#hi
 class Pet(Base):
     __tablename__ = 'pets'
     __table_args__ = (PrimaryKeyConstraint('id'),)
