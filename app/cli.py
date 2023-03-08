@@ -127,7 +127,7 @@ Would you like to add another pet? Yes/No: """).lower()
                     print('Pet has not been deleted.')
 
                     #NEED TO MAKE REMOVE OPTION SO THAT USERS CAN DELETE THEIR OWN PETS ONLY AND NOT OTHER USERS PETS.
-                    #IF YOU ARE GETTING AN ERROR WHEN RUNNING PYTHON SEEDS.PY, OR YOU WANT TO RESTORE THE DELETED ROWS, DELETE 'WAGGING_RIGHTS.DB' AND RUN 'alembic revision --autogenerate -m 'message' AND RUN 'alembic upgrade head'.
+                    #Run python seeds.py to restore table data
 
         else:
             print("Invalid input.")

@@ -75,9 +75,9 @@ if __name__ == '__main__':
                 email = fake.email(),
                 phone = random.randint(1000000000, 9999999999),
                 availability = f"""
-{fake.day_of_week()} ({date} - {date + end_date }), \n
-{fake.day_of_week()} ({date} - {date + end_date }), \n
-{fake.day_of_week()} ({date} - {date + end_date }) \n
+{fake.day_of_week()} \n
+{fake.day_of_week()} \n
+{fake.day_of_week()} \n
 """,
             )
 
