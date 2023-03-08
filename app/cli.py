@@ -163,4 +163,5 @@ Would you like to add another pet? Yes/No: """).lower()
         print("Invalid input.")
 
     # print('Thank you for using the Wagging Rights CLI!\n ')
+    # Add loop for pet menu.
 
