@@ -23,10 +23,10 @@ class Pet(Base):
     owner_id = Column(Integer(), ForeignKey('owners.id'))
 
     def __repr__(self):
-        return f"Id: {self.id}, " \
-            + f"Name:{self.name}, " \
+        return f"Pet ID: {self.id}, " \
+            + f"Name: {self.name}, " \
             + f"Breed: {self.breed}, "\
-            + f"Temperament: {self.temperament}"\
+            + f"Temperament: {self.temperament}, "\
             + f"Owner ID: {self.owner_id}"
 
 class Owner(Base):

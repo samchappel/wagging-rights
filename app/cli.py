@@ -3,15 +3,13 @@
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 
-from models import Store
-from helpers import (create_store_table, create_wagging_rights_item_table, fill_cart, show_cart, remove_from_cart, collect_payment)
-
 engine = create_engine('sqlite:///wagging_rights.db')
 session = sessionmaker(bind=engine)()
 
+from models import Owner, Pet, Provider, Service
+
 
 if __name__ == '__main__':
-    #Intro: welcome to the CLI, pick a store
     print('''
 __          __     _____  _____ _____ _   _  _____   _____  _____ _____ _    _ _______ _____ _
 \ \        / /\   / ____|/ ____|_   _| \ | |/ ____| |  __ \|_   _/ ____| |  | |__   __/ ____| |
@@ -28,36 +26,60 @@ __          __     _____  _____ _____ _   _  _____   _____  _____ _____ _    _ _
                                     ____|_       ___|   |___.'
                                     /_/_____/____/_______|
 
-''')
+    ''')
+    
+    print("Welcome to the Wagging Rights CLI!")
+
+    # Ask user to input their ID number (corresponds with owner_id)
+    owner_id = int(input("Please enter your owner id: "))
+
+    # Use owner_id to query Owners table and return owner name.
+    owner_name = session.query(Owner.name).filter(Owner.id == owner_id).first()[0].split(" ")[0]
+
+    # Print Welcome, {Name} and prompt them to input whether they would like to manage pets or appointments.
+    print(f"Welcome, {owner_name}! What would you like to do?")
+    task = input("What would you like to do? Enter 'pets' to manage pets or 'appointments' to manage appointments: ").lower()
+
+    # If 'Pets' bring user to 'Main Menu' pets.
+    if task == "pets":
+        print("Here are your pets:")
+
+    # Use owner_id to query Pets table and return all pets associated with that owner.
+        pets = session.query(Pet).filter(Pet.owner_id == owner_id).all()
+        for pet in pets:
+            print(pet)
+        # TODO - We will reformat this printout later.
+
+    # Prompt user to select from options to Add Pet, Update Pet, Remove Pet
+        option = input("What would you like to do? Enter 'add' to add a pet, 'update' to update a pet, 'remove' to remove a pet: ").lower()
+
+        if option == "add":
+            # BIANCA - Write your code here! :-)
+            print("You're adding a pet!")
+            
+        elif option == "update":
+            # SAM - Write your code here! :-)
+            print("You're updating a pet!")
+
+        elif option == "remove":
+            # TERRENCE - Write your code here! :-)
+            print("You're removing a pet!")
+        else:
+            print("Invalid input.")
+
+
+    elif task == "appointments":
+        print("Yay, you chose 'appointments'! This feature is coming soon.")
+    else:
+        print("Invalid input.")
+
+    
+
+    
 
 
 
+    
 
-    # print('Hello! Welcome to the Wagging Rights CLI!')
-    # print('Here is a list of available services:')
-    # stores = session.query(Store)
-    # create_store_table(stores)
+    
 
-    # # Get a choice of store, retrieve an object from the DB
-    # store= None
-    # while not store:
-    #     store_id = input('Please enter the ID of the service that you wish to select: ')
-    #     store = session.query(Store).filter(Store.id == store_id).one_or_none()
-
-    # # Display list of items at the store
-    # print('Here is a list of our services:')
-    # create_service_item_table(store)
-
-    # # Start adding items to cart
-    # shopping_cart, cart_total = fill_cart(session, store)
-    # print('Here are the services in your cart:')
-    # show_cart(shopping_cart)
-
-    # # Remove unwatned items from cart
-    # remove_from_cart(session, shopping_cart, cart_total)
-
-    # #Collect payment
-    # print(f'Your total is ${cart_total:.2f}\n')
-    # collect_payment(cart_total)
-
-    # print('Thank you for using the Wagging Rights CLI!\n ')
