@@ -27,12 +27,6 @@ if __name__ == '__main__':
 
     temperaments = ["Assertive or Aggressive", "Neutral", "Passive"]
 
-    # start_date = fake.date_time_between(start_date="-1y", end_date="now", tzinfo=None)
-    # # print(f"Start date: {start_date.strftime('%B %d, %Y')}")
-
-    # end_date = start_date + timedelta(days=random.randint(1, 7))
-    # # print(f"End date: {end_date.strftime('%B %d, %Y')}")
-
     for _ in range(30):
         owner = Owner(
             name = f"{fake.first_name()} {fake.last_name()}",
@@ -84,9 +78,7 @@ if __name__ == '__main__':
 {fake.day_of_week()} ({start_date} - {end_date }), \n
 {fake.day_of_week()} ({start_date} - {end_date }) \n
 """,
-                # hourly_rate = f'$' + f'%.2f' % random.uniform(20,40),
             )
-
 
             session.add(provider)
             session.commit()
