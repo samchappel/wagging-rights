@@ -106,25 +106,27 @@ Would you like to add another pet? Yes/No: """).lower()
             # SAM - Write your code here! :-)
             print("You're updating a pet!")
 
-        # elif option == "remove":
-        #         # print('removing pet...')
-        #     # TERRENCE - Write your code here! :-)
-        #     remove = True
-        #     while remove:
-        #         print('')
-        #         pet_idx = int(input("Please Provide The 'Pet ID' Of The Pet You Wish To Remove: "))
-        #         pets = session.query(Pet).filter(Pet.id == pet_idx).first()
+        elif option == "remove":
+                # print('removing pet...')
+            # TERRENCE - Write your code here! :-)
+            remove = True
+            while remove:
+                print('')
+                pet_idx = int(input("Please Provide The 'Pet ID' Of The Pet You Wish To Remove: "))
+                pets = session.query(Pet).filter(Pet.id == pet_idx).first()
 
-        #         print('')
-        #         print(pets)
+                print('')
+                print(pets)
 
-        #         yes_no = input("Do You Wish To Delete This Pet? (Y/n)")
-        #         while yes_no in YES:
-        #             session.delete(pets, confirm_deleted_rows=False)
-        #             session.commit()
-        #             print('Your Pet Has been Removed Successfully!')
-        #         else:
-        #             print('Pet has not been deleted.')
+                yes_no = input("Do You Wish To Delete This Pet? (Y/n)")
+                while yes_no in YES:
+                    session.delete(pets, confirm_deleted_rows=False)
+                    session.commit()
+                    print('Your Pet Has been Removed Successfully!')
+                else:
+                    print('Pet has not been deleted.')
+
+                    #IF YOU ARE GETTING AN ERROR WHEN RUNNING PYTHON SEEDS.PY, OR YOU WANT TO RESTORE THE DELETED ROWS, DELETE 'WAGGING_RIGHTS.DB' AND RUN 'alembic revision --autogenerate -m 'message' AND RUN 'alembic upgrade head'.
 
         else:
             print("Invalid input.")
