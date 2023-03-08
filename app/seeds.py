@@ -67,16 +67,16 @@ if __name__ == '__main__':
         providers = []
 
         for _ in range(10):
-            start_date = fake.date_time_between(start_date="now", end_date="+3d", tzinfo=None)
-            end_date = start_date + timedelta(days=random.randint(1, 3))
+            date = fake.date_time_between(start_date="now", end_date="+3d", tzinfo=None)
+            end_date = timedelta(days=random.randint(1, 1))
             provider = Provider(
                 name = f"{fake.first_name()} {fake.last_name()}",
                 email = fake.email(),
                 phone = random.randint(1000000000, 9999999999),
                 availability = f"""
-{fake.day_of_week()} ({start_date} - {end_date }), \n
-{fake.day_of_week()} ({start_date} - {end_date }), \n
-{fake.day_of_week()} ({start_date} - {end_date }) \n
+{fake.day_of_week()} ({date} - {date + end_date }), \n
+{fake.day_of_week()} ({date} - {date + end_date }), \n
+{fake.day_of_week()} ({date} - {date + end_date }) \n
 """,
             )
 

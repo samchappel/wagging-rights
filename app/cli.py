@@ -3,7 +3,8 @@
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 
-# from models import Store
+from models import Owner, Pet, Provider, Service
+from helpers import add_new_pet
 # from helpers import (create_store_table, create_wagging_rights_item_table, fill_cart, show_cart, remove_from_cart, collect_payment)
 
 engine = create_engine('sqlite:///wagging_rights.db')
@@ -29,17 +30,23 @@ __          __     _____  _____ _____ _   _  _____   _____  _____ _____ _    _ _
                                     /_/_____/____/_______|
 
 ''')
-    print("Welcome to the Wagging Rights CLI!")
+    print("Welcome To Wagging Rights CLI!")
+    print('')
 
     # Ask user to input their ID number (corresponds with owner_id)
-    owner_id = int(input("Please enter your owner id: "))
+    owner_id = int(input("Please Enter Your Owner Id To Get Started: "))
 
     # Use owner_id to query Owners table and return owner name.
     owner_name = session.query(Owner.name).filter(Owner.id == owner_id).first()[0].split(" ")[0]
 
     # Print Welcome, {Name} and prompt them to input whether they would like to manage pets or appointments.
-    print(f"Welcome, {owner_name}! What would you like to do?")
-    task = input("What would you like to do? Enter 'pets' to manage pets or 'appointments' to manage appointments: ").lower()
+    print('')
+    print(f"Welcome, {owner_name}! What Would You Like To Do Today?")
+    print('')
+    print(f'Enter:')
+    task = input(f"""'pets' - For Pet Profile
+'appointment' - To Book An Appointment
+""").lower()
 
     # If 'Pets' bring user to 'Main Menu' pets.
     if task == "pets":
@@ -83,13 +90,16 @@ __          __     _____  _____ _____ _   _  _____   _____  _____ _____ _    _ _
             print("You're updating a pet!")
 
         elif option == "remove":
+            remove = True
+            while remove:
+                print("This feature is coming soon.")
             # TERRENCE - Write your code here! :-)
             print("You're removing a pet!")
         else:
             print("Invalid input.")
 
 
-    elif task == "appointments":
+    elif task == "appointment":
         print("Yay, you chose 'appointments'! This feature is coming soon.")
     else:
         print("Invalid input.")
