@@ -120,7 +120,7 @@ Would you like to add another pet? Yes/No: """).lower()
 
                 yes_no = input("Do You Wish To Delete This Pet? (Y/n)")
                 while yes_no in YES:
-                    session.delete(pets, confirm_deleted_rows=False)
+                    session.delete(pets)
                     session.commit()
                     print('Your Pet Has been Removed Successfully!')
                 else:
