@@ -1,5 +1,5 @@
 from models import Pet
-import click
+# import click
 
 def add_new_pet(session, name, age, breed, temperament, treats, notes, owner_id):
     new_pet = Pet(name=name, age=age, breed=breed, temperament=temperament, 

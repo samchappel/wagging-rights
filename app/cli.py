@@ -6,7 +6,7 @@ from sqlalchemy.orm import sessionmaker
 from models import Owner, Pet, Provider, Service
 from helpers import add_new_pet
 # from helpers import (create_store_table, create_wagging_rights_item_table, fill_cart, show_cart, remove_from_cart, collect_payment)
-import click
+# import click
 
 engine = create_engine('sqlite:///wagging_rights.db')
 session = sessionmaker(bind=engine)()
@@ -118,11 +118,21 @@ Would you like to add another pet? Yes/No: """).lower()
                 print('')
                 print(pets)
 
-                yes_no = input("Do You Wish To Delete This Pet? (Y/n)")
+                yes_no = input("Do You Wish To Delete This Pet? (Y/n): \n")
                 if yes_no.lower() in YES:
                     session.delete(pets)
                     session.commit()
                     print('Your Pet Has been Removed Successfully!')
+                    rem_another = input('Would you like to remove another pet? (Y/n): \n')
+                    if rem_another.lower() in YES:
+                        continue
+                    elif rem_another.lower() in NO:
+                        print("Routing you back to main menu...")
+                        remove = False
+                    else:
+                        print("Invalid input. Routing you back to main menu...")
+                        remove = False
+
                 else:
                     print('Pet has not been deleted.')
 
