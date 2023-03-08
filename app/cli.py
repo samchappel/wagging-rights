@@ -95,7 +95,7 @@ Would you like to add another pet? Yes/No: """).lower()
 
         elif option == "update":
             update = True
-            while update: 
+            while update:
                 pet_id = input("You've selected update! Enter the ID of the pet you want to update: ")
                 pet = session.query(Pet).filter(Pet.id == Pet.id)
                 if not pet:
@@ -128,10 +128,14 @@ Would you like to add another pet? Yes/No: """).lower()
 
                 yes_no = input("Do You Wish To Delete This Pet? (Y/n): \n")
                 if yes_no.lower() in YES:
-                    session.delete(pets)
-                    session.commit()
-                    print('Your Pet Has been Removed Successfully!')
-                    rem_another = input('Would you like to remove another pet? (Y/n): \n')
+                    if pets.owner_id == owner_id:
+                        session.delete(pets)
+                        session.commit()
+                        print('Your Pet Has been Removed Successfully!')
+                        rem_another = input('Would you like to remove another pet? (Y/n): \n')
+                    else:
+                        print('You cannot delete a pet that is not yours.')
+                        rem_another = input('Would you like to remove another pet? (Y/n): \n')
                     if rem_another.lower() in YES:
                         continue
                     elif rem_another.lower() in NO:
