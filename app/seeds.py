@@ -53,7 +53,8 @@ if __name__ == '__main__':
                 temperament = random.choice(temperaments),
                 favorite_treats = random.choice(favorite_treats),
                 notes = fake.sentence(),
-                owner_id = owner.id
+                owner_id = owner.id,
+                
             )
 
             session.add(pet)

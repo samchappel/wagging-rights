@@ -6,11 +6,13 @@ from sqlalchemy.orm import sessionmaker
 from models import Owner, Pet, Provider, Service
 from helpers import add_new_pet
 # from helpers import (create_store_table, create_wagging_rights_item_table, fill_cart, show_cart, remove_from_cart, collect_payment)
+import click
 
 engine = create_engine('sqlite:///wagging_rights.db')
 session = sessionmaker(bind=engine)()
 
-
+YES = ['y', 'ye', 'yes']
+NO = ['n','no']
 if __name__ == '__main__':
     #Intro: welcome to the CLI, pick a store
     print('''
@@ -41,16 +43,22 @@ __          __     _____  _____ _____ _   _  _____   _____  _____ _____ _    _ _
 
     # Print Welcome, {Name} and prompt them to input whether they would like to manage pets or appointments.
     print('')
+    print('')
+    print('')
     print(f"Welcome, {owner_name}! What Would You Like To Do Today?")
     print('')
-    print(f'Enter:')
-    task = input(f"""'pets' - For Pet Profile
-'appointment' - To Book An Appointment
-""").lower()
+    print(f'PLEASE ENTER:')
+    task = input(f"""pets - To View Your Pet(s) Profile
+appointment - To Book An Appointment
+
+ENTER: """).lower()
 
     # If 'Pets' bring user to 'Main Menu' pets.
     if task == "pets":
-        print("Here are your pets:")
+        print('')
+        print('')
+        print("Your Pet(s) Profile:")
+        print('')
 
     # Use owner_id to query Pets table and return all pets associated with that owner.
         pets = session.query(Pet).filter(Pet.owner_id == owner_id).all()
@@ -59,13 +67,21 @@ __          __     _____  _____ _____ _   _  _____   _____  _____ _____ _    _ _
         # TODO - We will reformat this printout later.
 
     # Prompt user to select from options to Add Pet, Update Pet, Remove Pet
-        option = input("What would you like to do? Enter 'add' to add a pet, 'update' to update a pet, 'remove' to remove a pet: ").lower()
+        option = input("""
+PLEASE ENTER:
+add - Add A Pet
+update - Update A Pet
+remove - Remove A Pet
+
+ENTER: """).lower()
 
         if option == "add":
             # BIANCA - Write your code here! :-)
             add = True
             while add:
-                print("Please provide some information about your new pet.")
+                print('')
+                print("Please Provide Information About Your New Pet!")
+                print('')
                 name = input("Name: ")
                 age = int(input("Age: "))
                 breed = input("Breed: ")
@@ -80,7 +96,8 @@ __          __     _____  _____ _____ _   _  _____   _____  _____ _____ _    _ _
                 # print("Thank you for your submission. Here is the information we received:")
                 # print(new_db_pet)
                 add_new_pet(session, name, age, breed, temperament, treats, notes, owner_id)
-                another = input("Would you like to add another pet? Yes/No: ").lower()
+                another = input("""
+Would you like to add another pet? Yes/No: """).lower()
                 if another == "no":
                     print("Routing you back to the main menu...")
                     add = False
@@ -92,9 +109,23 @@ __          __     _____  _____ _____ _   _  _____   _____  _____ _____ _    _ _
         elif option == "remove":
             remove = True
             while remove:
-                print("This feature is coming soon.")
+                print('')
+                pet_idx = int(input("Please Provide The 'Pet ID' Of The Pet You Wish To Remove: "))
+                pets = session.query(Pet).filter(Pet.id == pet_idx).first()
+
+                print('')
+                print(pets)
+
+                yes_no = input("Do You Wish To Delete This Pet? (Y/n)")
+                while yes_no in YES:
+                    session.delete(pets)
+                    session.commit()
+                else:
+                    print('Pet has not been deleted.')
+                # print('removing pet...')
             # TERRENCE - Write your code here! :-)
-            print("You're removing a pet!")
+            print("Your Pet Has Been Removed Successfully!")
+
         else:
             print("Invalid input.")
 

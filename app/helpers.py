@@ -1,4 +1,5 @@
 from models import Pet
+import click
 
 def add_new_pet(session, name, age, breed, temperament, treats, notes, owner_id):
     new_pet = Pet(name=name, age=age, breed=breed, temperament=temperament, 
@@ -6,14 +7,28 @@ def add_new_pet(session, name, age, breed, temperament, treats, notes, owner_id)
     session.add(new_pet)
     session.commit()
     new_db_pet = session.query(Pet).filter(Pet.id == new_pet.id).first()
-    print("Thank you for your submission. Here is the information we received:")
+    print('')
+    print('')
+    print("Thank You For Your Submission!")
+    print('')
     print(new_db_pet)
+    print("Your Pet Has Been Added Successfully!")
 
 
 
 
+# def remove_pet(session, idx):
 
 
+                # session.show(pet)
+                # print('Do You Still Wish To Remove?')
+                # new_db_pet = session.query(Pet).filter(Pet.id == id).first()
+                # print('')
+                # print('')
+                # print('Thank You For Your Submission!')
+                # print('')
+                # print(new_db_pet)
+                # print('Your Pet Has Been Removed Successfully!')
 
 
 
