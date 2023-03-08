@@ -4,8 +4,8 @@ from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 
 from models import Owner, Pet, Provider, Service
-from helpers import add_new_pet
 
+from helpers import update_pet, print_pet, add_new_pet
 
 engine = create_engine('sqlite:///wagging_rights.db')
 session = sessionmaker(bind=engine)()
@@ -94,8 +94,27 @@ Would you like to add another pet? Yes/No: """).lower()
                     add = False
 
         elif option == "update":
-            # SAM - Write your code here! :-)
-            print("You're updating a pet!")
+            update = True
+            while update: 
+                pet_id = input("You've selected update! Enter the ID of the pet you want to update: ")
+                pet = session.query(Pet).filter(Pet.id == Pet.id)
+                if not pet:
+                    print("Invalid ID. Please enter a valid ID.")
+                    continue
+                for pet in pets:
+                    field = input(f"What updates would you like to make for {pet.name}? Enter 'name', 'age', 'breed', 'temperament', 'treats', or 'notes' to make those changes to {pet.name}'s record: ").lower()
+                    if field not in ['name', 'age', 'breed', 'temperament', 'treats', 'notes']:
+                        print("Invalid field. Please enter a valid field.")
+                        continue
+
+                new_value = input(f"Enter the new value for {field}: ")
+                update_pet(session, pet, field, new_value)
+                print_pet(pet)
+
+                another = input("Would you like to update another pet? Yes/No: ").lower()
+                if another == "no":
+                    print("Routing you back to the main menu...")
+                    update = False
 
         elif option == "remove":
             remove = True
@@ -135,7 +154,8 @@ Would you like to add another pet? Yes/No: """).lower()
     elif task == "appointment":
         print("Yay, you chose 'appointments'! This feature is coming soon.")
     else:
+
         print("Invalid input.")
 
-
     # print('Thank you for using the Wagging Rights CLI!\n ')
+
