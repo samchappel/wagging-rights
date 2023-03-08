@@ -58,8 +58,36 @@ __          __     _____  _____ _____ _   _  _____   _____  _____ _____ _    _ _
             print("You're adding a pet!")
             
         elif option == "update":
-            # SAM - Write your code here! :-)
-            print("You're updating a pet!")
+            pet_id = input("You've selected update! Enter the ID of the pet you want to update: ")
+            pet = session.query(Pet).filter(Pet.id == Pet.id)
+            for pet in pets:
+                update = input(f"What updates would you like to make for {pet.name}? Enter 'name', 'age', 'breed', 'temperament', 'treats', or 'notes' to make those changes for {pet.name}: ").lower()
+                if update == "name":
+                    new_name = input("Enter a new name: ")
+                    pet.name = new_name
+                    print(f"{pet.name}'s name has been updated.")
+                elif update == "age":
+                    new_age = input("Enter a new age: ")
+                    pet.age = int(new_age)
+                    print(f"{pet.name}'s age has been updated to {pet.age}.")
+                elif update == "breed":
+                    new_breed = input("Enter a new breed: ")
+                    pet.breed = new_breed
+                    print(f"{pet.name}'s breed has been updated to {pet.breed}.")
+                elif update == "temperament":
+                    new_temperament = input("Enter a new temperament: ")
+                    pet.temperament = new_temperament
+                    print(f"{pet.name}'s temperament has been updated to {pet.temperament}.")
+                elif update == "treats":
+                    new_treats = input("Enter new favorite treat: ")
+                    pet.treats = new_treats
+                    print(f"{pet.name}'s favorite treat have been updated to {pet.treat}.")
+                elif update == "notes":
+                    new_notes = input("Enter new note: ")
+                    pet.notes = new_notes
+                    print(f"{pet.name}'s notes have been updated to '{pet.notes}'.")
+                else:
+                    print("Invalid choice. Please enter a field to update from the list above.")
 
         elif option == "remove":
             # TERRENCE - Write your code here! :-)
