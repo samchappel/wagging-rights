@@ -54,19 +54,21 @@ ENTER: """).lower()
 
     # If 'Pets' bring user to 'Main Menu' pets.
     if task == "pets":
-        print('')
-        print('')
-        print("Your Pet(s) Profile:")
-        print('')
+        pet_menu = True
+        while pet_menu:
+            print('')
+            print('')
+            print("Your Pet(s) Profile:")
+            print('')
 
-    # Use owner_id to query Pets table and return all pets associated with that owner.
-        pets = session.query(Pet).filter(Pet.owner_id == owner_id).all()
-        for pet in pets:
-            print(pet)
-        # TODO - We will reformat this printout later.
+        # Use owner_id to query Pets table and return all pets associated with that owner.
+            pets = session.query(Pet).filter(Pet.owner_id == owner_id).all()
+            for pet in pets:
+                print(pet)
+            # TODO - We will reformat this printout later.
 
-    # Prompt user to select from options to Add Pet, Update Pet, Remove Pet
-        option = input("""
+        # Prompt user to select from options to Add Pet, Update Pet, Remove Pet
+            option = input("""
 PLEASE ENTER:
 add - Add A Pet
 update - Update A Pet
@@ -74,91 +76,84 @@ remove - Remove A Pet
 
 ENTER: """).lower()
 
-        if option == "add":
-            add = True
-            while add:
-                print('')
-                print("Please Provide Information About Your New Pet!")
-                print('')
-                name = input("Name: ")
-                age = int(input("Age: "))
-                breed = input("Breed: ")
-                temperament = input("Temperament: ")
-                treats = input("Favorite Treats: ")
-                notes = input("Additional Notes/Special Needs: ")
-                add_new_pet(session, name, age, breed, temperament, treats, notes, owner_id)
-                another = input("""
+            if option == "add":
+                add = True
+                while add:
+                    print('')
+                    print("Please Provide Information About Your New Pet!")
+                    print('')
+                    name = input("Name: ")
+                    age = int(input("Age: "))
+                    breed = input("Breed: ")
+                    temperament = input("Temperament: ")
+                    treats = input("Favorite Treats: ")
+                    notes = input("Additional Notes/Special Needs: ")
+                    add_new_pet(session, name, age, breed, temperament, treats, notes, owner_id)
+                    another = input("""
 Would you like to add another pet? Yes/No: """).lower()
-                if another == "no":
-                    print("Routing you back to the main menu...")
-                    add = False
-
-        elif option == "update":
-            update = True
-            while update:
-                pet_id = input("You've selected update! Enter the ID of the pet you want to update: ")
-                pet = session.query(Pet).filter(Pet.id == pet_id, Pet.owner_id == owner_id).first()
-                if not pet:
-                    print("Invalid ID. Please enter a valid ID that belongs to your pet.")
-                    continue
-                for pet in pets:
-                    field = input(f"What updates would you like to make for {pet.name}? Enter 'name', 'age', 'breed', 'temperament', 'treats', or 'notes' to make those changes to {pet.name}'s record: ").lower()
-                    if field not in ['name', 'age', 'breed', 'temperament', 'treats', 'notes']:
-                        print("Invalid field. Please enter a valid field.")
+                    if another == "no":
+                        print("Routing you back to the main menu...")
+                        add = False
                         continue
 
-                new_value = input(f"Enter the new value for {field}: ")
-                update_pet(session, pet, field, new_value)
-                print_pet(pet)
+            elif option == "update":
+                update = True
+                while update: 
+                    pet_id = int(input("You've selected update! Enter the ID of the pet you want to update: "))
+                    pet = session.query(Pet).filter(Pet.id == pet_id, Pet.owner_id == owner_id).first()
+                    if not pet:
+                        print("Invalid ID. Please enter a valid ID that belongs to your pet.")
+                        continue
+                    else:
+                        field = input(f"What updates would you like to make for {pet.name}? Enter 'name', 'age', 'breed', 'temperament', 'treats', or 'notes' to make those changes to {pet.name}'s record: ").lower()
+                        if field not in ['name', 'age', 'breed', 'temperament', 'treats', 'notes']:
+                            print("Invalid field. Please enter a valid field.")
+                            continue
+                        else:
+                            new_value = input(f"Enter the new value for {field}: ")
+                            update_pet(session, pet, field, new_value)
+                            print_pet(pet)
 
-                another = input("Would you like to update another pet? Yes/No: ").lower()
-                if another == "no":
-                    print("Routing you back to the main menu...")
-                    update = False
+                            another = input("Would you like to update another pet? Yes/No: ").lower()
+                            if another == "no":
+                                print("Routing you back to the main menu...")
+                                update = False
+                                continue
 
-        elif option == "remove":
-            remove = True
-            while remove:
-                print('')
-                pet_idx = int(input("Please Provide The 'Pet ID' Of The Pet You Wish To Remove: "))
-                pets = session.query(Pet).filter(Pet.id == pet_idx).first()
-                if pets.owner_id == owner_id:
+            elif option == "remove":
+                remove = True
+                while remove:
+                    print('')
+                    pet_idx = int(input("Please Provide The 'Pet ID' Of The Pet You Wish To Remove: "))
+                    pets = session.query(Pet).filter(Pet.id == pet_idx).first()
+
                     print('')
                     print(pets)
+
                     yes_no = input("Do You Wish To Delete This Pet? (Y/n): \n")
                     if yes_no.lower() in YES:
-                        if pets.owner_id == owner_id:
-                            session.delete(pets)
-                            session.commit()
-                            print('Your Pet Has been Removed Successfully!')
-                else:
-                    print('')
-                    print('Please select a valid Pet ID.')
-                    continue
-                rem_another = input('Would you like to remove another pet? (Y/n): \n')
+                        session.delete(pets)
+                        session.commit()
+                        print('Your Pet Has been Removed Successfully!')
+                        rem_another = input('Would you like to remove another pet? (Y/n): \n')
+                        if rem_another.lower() in YES:
+                            continue
+                        elif rem_another.lower() in NO:
+                            print("Routing you back to main menu...")
+                            remove = False
+                        else:
+                            print("Invalid input. Routing you back to main menu...")
+                            remove = False
+                            continue
 
-                # yes_no = input("Do You Wish To Delete This Pet? (Y/n): \n")
-                        # rem_another = input('Would you like to remove another pet? (Y/n): \n')
-                    # else:
-                    #     # print('You cannot delete a pet that is not yours.')
-                    #     rem_another = input('Would you like to remove another pet? (Y/n): \n')
-                if rem_another.lower() in YES:
-                    continue
-                elif rem_another.lower() in NO:
-                    print("Routing you back to main menu...")
-                    remove = False
-                else:
-                    print("Invalid input. Routing you back to main menu...")
-                    remove = False
+                    else:
+                        print('Pet has not been deleted.')
 
-            # else:
-            #     print('Pet has not been deleted.')
+                        #NEED TO MAKE REMOVE OPTION SO THAT USERS CAN DELETE THEIR OWN PETS ONLY AND NOT OTHER USERS PETS.
+                        #Run python seeds.py to restore table data
 
-                    #NEED TO MAKE REMOVE OPTION SO THAT USERS CAN DELETE THEIR OWN PETS ONLY AND NOT OTHER USERS PETS.
-                    #Run python seeds.py to restore table data
-
-        else:
-            print("Invalid input.")
+            else:
+                print("Invalid input.")
 
 
     elif task == "appointment":
@@ -168,4 +163,5 @@ Would you like to add another pet? Yes/No: """).lower()
         print("Invalid input.")
 
     # print('Thank you for using the Wagging Rights CLI!\n ')
+    # Add loop for pet menu.
 
