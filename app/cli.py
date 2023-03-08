@@ -46,6 +46,9 @@ __          __     _____  _____ _____ _   _  _____   _____  _____ _____ _    _ _
         pets = session.query(Pet).filter(Pet.owner_id == owner_id).all()
         for pet in pets:
             print(pet)
+        # TODO - We will reformat this printout later.
+
+
     else:
         print("Yay, you chose 'appointments'! This feature is coming soon.")
 
