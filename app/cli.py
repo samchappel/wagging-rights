@@ -44,7 +44,7 @@ __          __     _____  _____ _____ _   _  _____   _____  _____ _____ _    _ _
     # Print Welcome, {Name} and prompt them to input whether they would like to manage pets or appointments.
     print('')
     print('')
-    print('')
+    print('-'*50)
     print(f"Welcome, {owner_name}! What Would You Like To Do Today?")
     print('')
     print(f'PLEASE ENTER:')
