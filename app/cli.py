@@ -119,13 +119,14 @@ Would you like to add another pet? Yes/No: """).lower()
                 print(pets)
 
                 yes_no = input("Do You Wish To Delete This Pet? (Y/n)")
-                while yes_no in YES:
+                if yes_no.lower() in YES:
                     session.delete(pets)
                     session.commit()
                     print('Your Pet Has been Removed Successfully!')
                 else:
                     print('Pet has not been deleted.')
 
+                    #NEED TO MAKE REMOVE OPTION SO THAT USERS CAN DELETE THEIR OWN PETS ONLY AND NOT OTHER USERS PETS.
                     #IF YOU ARE GETTING AN ERROR WHEN RUNNING PYTHON SEEDS.PY, OR YOU WANT TO RESTORE THE DELETED ROWS, DELETE 'WAGGING_RIGHTS.DB' AND RUN 'alembic revision --autogenerate -m 'message' AND RUN 'alembic upgrade head'.
 
         else:

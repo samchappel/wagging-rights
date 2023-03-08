@@ -11,6 +11,7 @@ Base = declarative_base()
 class Pet(Base):
     __tablename__ = 'pets'
     __table_args__ = (PrimaryKeyConstraint('id'),)
+    __mapper_args__ = {'confirm_deleted_rows': False}
 
     id = Column(Integer())
     name = Column(String())
