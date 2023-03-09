@@ -64,9 +64,9 @@ def query_pets(session, owner_id):
     for pet in pets:
                 print(pet)
 
-def create_new_dropwalk(session, pet_id, request, start_date, fee):
+def create_new_dropwalk(session, pet_id, request, start_date, fee, notes):
     new_appt = Service(pet_id=pet_id, request=request, 
-                    start_date=start_date, fee=fee)
+                    start_date=start_date, fee=fee, notes=notes)
     session.add(new_appt)
     session.commit()
     new_db_appt = session.query(Service).filter(Service.id == new_appt.id).first()

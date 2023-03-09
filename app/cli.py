@@ -230,8 +230,10 @@ ENTER: """) + ":00"
 
             formatted_datetime = datetime.strptime(string_datetime, formatter)
 
+            add_note = input("Please Enter Any Notes For This Service Request: ")
+
             create_new_dropwalk(session=session, pet_id=id, 
-                                request=service, start_date=formatted_datetime, fee=f"${fees[service]}.00")
+                                request=service, start_date=formatted_datetime, fee=f"${fees[service]}.00", notes=add_note)
             
 
         elif appt_type == 3:
