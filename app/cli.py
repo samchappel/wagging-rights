@@ -234,32 +234,32 @@ ENTER: """).lower()
 
         name = session.query(Pet.name).filter(Pet.id == id).first()[0]
 
-        appt_type = int(input(f"""What Type Of Appointment Are You Scheduling for {name}? 
-PLEASE ENTER: 
-1 - Drop-in, 
-2 - Walking, 
+        appt_type = int(input(f"""What Type Of Appointment Are You Scheduling for {name}?
+PLEASE ENTER:
+1 - Drop-in,
+2 - Walking,
 3 - House-sitting
 
 ENTER: """))
-        
+
         fees = {"Drop-In": 50, "Walking": 35, "House-Sitting": 70}
-        
+
         if appt_type == 1 or appt_type == 2:
 
             if appt_type == 1:
-                service = "Drop-In" 
+                service = "Drop-In"
 
             elif appt_type == 2:
                 service = "Walking"
 
             print(f"You selected {service}, which costs ${fees[service]}.00 per session.")
-            
+
             date_input = input("""
 What date would you like to schedule this service for?
 Enter using MM/DD/YYYY format
 
 ENTER: """)
-            
+
             print(f"You selected {date_input} for your service date.")
 
             time_input = input("""
@@ -279,20 +279,20 @@ ENTER: """) + ":00"
 
             add_note = input("Please Enter Any Notes For This Service Request: ")
 
-            create_new_dropwalk(session=session, pet_id=id, 
+            create_new_dropwalk(session=session, pet_id=id,
                                 request=service, start_date=formatted_datetime, fee=f"${fees[service]}.00", notes=add_note)
-            
+
 
         elif appt_type == 3:
             print("You Selected House-Sitting, which costs $70 per day.")
-            start_date_str = input("""What Date Would You Like This Service To Start? 
+            start_date_str = input("""What Date Would You Like This Service To Start?
 Please Enter In MM/DD/YYYY Format: """)
-                                   
+
             print(f"You've selected to book house-sitting beginning {start_date_str}.")
 
-            end_date_str = input("""What Date Would You Like This Service To End? 
+            end_date_str = input("""What Date Would You Like This Service To End?
 Please Enter In MM/DD/YYYY Format: """)
-                                 
+
             print(f"You've selected to book house-sitting through {end_date_str}.")
 
             start_date = datetime.strptime(start_date_str, "%m/%d/%Y").date()
@@ -307,79 +307,71 @@ Please Enter In MM/DD/YYYY Format: """)
 
         else:
             print("Please Enter A Valid Input.")
-
-
-        
-
-
-    
-    elif request == "cancel":
-        pass
-
 # NEW REQUEST END
 
+
 #"CANCEL REQUEST" START:
-                elif request == "cancel":
-                    cancel = True
-                    while cancel:
-                        print('')
-                        service_idx = int(input(f"""Please Provide The 'Service ID' Of The Service You Wish To Cancel:
+    elif request == "cancel":
+        cancel = True
+        while cancel:
+            print('')
+            service_idx = int(input(f"""Please Provide The 'Service ID' Of The Service You Wish To Cancel:
 
 ENTER: """))
-                        service = session.query(Service).filter(Service.id == service_idx).first()
-                        print(line_db)
-                        print(service)
-                        print(line)
-                        print('')
-                        yes_no = input("Do You Wish To Cancel This Service? (Y/n): ")
-                        if yes_no.lower() in YES:
-                            session.delete(service)
-                            session.commit()
-                            print(line_db)
-                            print('Your Service Has been Removed Successfully!')
-                            print('')
-                            rem_another = input(f'''Would You Like To Remove Another Service? (Y/n):
+            service = session.query(Service).filter(Service.id == service_idx).first()
+            print(line_db)
+            print(service)
+            print(line)
+            print('')
+            yes_no = input("Do You Wish To Cancel This Service? (Y/n): ")
+            if yes_no.lower() in YES:
+                session.delete(service)
+                session.commit()
+                print(line_db)
+                print('Your Service Has been Removed Successfully!')
+                print('')
+                rem_another = input(f'''Would You Like To Remove Another Service? (Y/n):
 
 ENTER: ''')
-                            if rem_another.lower() in YES:
-                                continue
-                            elif rem_another.lower() in NO:
-                                print("Routing You Back To Appointment Menu...")
-                                cancel = False
-                                appointment_menu = True
-                        elif yes_no.lower() in NO:
-                            print("Routing You Back To Appointment Menu...")
-                            cancel = False
-                            appointment_menu = False
-                            continue
+                if rem_another.lower() in YES:
+                    continue
+                elif rem_another.lower() in NO:
+                    print("Routing You Back To Appointment Menu...")
+                    cancel = False
+                    appointment_menu = True
+            elif yes_no.lower() in NO:
+                print("Routing You Back To Appointment Menu...")
+                cancel = False
+                appointment_menu = False
+                continue
 #"CANCEL REQUEST" END.
 
 
 #"VIEW PROVIDERS" START:
-                elif request == "view":
-                    view = True
-                    while view:
-                        print('')
-                        providers = session.query(Provider).all()
-                        print('-'*50)
-                        print('')
-                        print("Available Providers:")
-                        print('')
-                        for provider in providers:
-                            print(f"Provider ID: {provider.id} | Provider Name: {provider.name} | Provider Email: {provider.email}")
-                            print('')
-                        back = input('Would You Like To Return To Appointment Menu? (Y/n): \n')
-                        if back.lower() in YES:
-                            view = False
+    elif request == "view":
+        view = True
+        while view:
+            print('')
+            providers = session.query(Provider).all()
+            print('-'*50)
+            print('')
+            print("Available Providers:")
+            print('')
+            for provider in providers:
+                print(f"Provider ID: {provider.id} | Provider Name: {provider.name} | Provider Email: {provider.email}")
+                print('')
+            back = input('Would You Like To Return To Appointment Menu? (Y/n): \n')
+            if back.lower() in YES:
+                view = False
 #"VIEW PROVIDERS" END
 
 #GO BACK
-                elif request == "back":
-                    appointment_menu = False
+    elif request == "back":
+        appointment_menu = False
 
 #If Invalid Input
-                else:
-                    print("Please Enter A Valid Input.")
+    else:
+        print("Please Enter A Valid Input.")
 
     # print('Thank you for using the Wagging Rights CLI!\n ')
     # Add loop for pet menu.
