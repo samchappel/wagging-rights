@@ -3,7 +3,7 @@
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 from models import Owner, Pet, Provider, Service
-from helpers import update_pet, print_pet, add_new_pet
+from helpers import update_pet, print_pet, add_new_pet, query_pets, create_new_dropwalk, book_house_sitting
 
 engine = create_engine('sqlite:///wagging_rights.db')
 session = sessionmaker(bind=engine)()
