@@ -12,6 +12,7 @@ session = sessionmaker(bind=engine)()
 
 YES = ['y', 'ye', 'yes']
 NO = ['n','no']
+line = '-'*50
 if __name__ == '__main__':
     #Intro: welcome to the CLI, pick a store
     print('''
@@ -35,30 +36,34 @@ __          __     _____  _____ _____ _   _  _____   _____  _____ _____ _    _ _
     print('')
 
     # Ask user to input their ID number (corresponds with owner_id)
-    owner_id = int(input("Please Enter Your Owner Id To Get Started: "))
+    owner_id = int(input(f"""Please Enter Your Owner Id To Get Started:
+
+ENTER: """))
 
     # Use owner_id to query Owners table and return owner name.
     owner_name = session.query(Owner.name).filter(Owner.id == owner_id).first()[0].split(" ")[0]
 
     # Print Welcome, {Name} and prompt them to input whether they would like to manage pets or appointments.
     print('')
-    print('')
     print('-'*50)
+    print('')
     print(f"Welcome, {owner_name}! What Would You Like To Do Today?")
     print('')
-    print(f'PLEASE ENTER:')
-    task = input(f"""pets - To View Your Pet(s) Profile
-appointment - To Book An Appointment
+    print(f'Please Enter:')
+    task = input(f"""
+    pet - View Your Pet Profile(s)
+    appointment - Book An Appointment
 
 ENTER: """).lower()
 
     # If 'Pets' bring user to 'Main Menu' pets.
-    if task == "pets":
+    if task == "pet":
         pet_menu = True
         while pet_menu:
             print('')
+            print('-'*50)
             print('')
-            print("Your Pet(s) Profile:")
+            print("Your Pet Profile(s):")
             print('')
 
         # Use owner_id to query Pets table and return all pets associated with that owner.
@@ -68,11 +73,11 @@ ENTER: """).lower()
             # TODO - We will reformat this printout later.
 
         # Prompt user to select from options to Add Pet, Update Pet, Remove Pet
-            option = input("""
-PLEASE ENTER:
-add - Add A Pet
-update - Update A Pet
-remove - Remove A Pet
+            option = input("""Please Enter:
+
+    add - Add A Pet
+    update - Update A Pet
+    remove - Remove A Pet
 
 ENTER: """).lower()
 
@@ -80,7 +85,9 @@ ENTER: """).lower()
                 add = True
                 while add:
                     print('')
+                    print('')
                     print("Please Provide Information About Your New Pet!")
+                    print('-'*50)
                     print('')
                     name = input("Name: ")
                     age = int(input("Age: "))
@@ -99,18 +106,28 @@ Would you like to add another pet? Yes/No: """).lower()
             elif option == "update":
                 update = True
                 while update:
-                    pet_id = int(input("You've selected update! Enter the ID of the pet you want to update: "))
+                    print('-'*50)
+                    pet_id = int(input(f"""You've Selected Update! Enter The ID Of The Pet You Want To Update:
+
+ENTER: """))
                     pet = session.query(Pet).filter(Pet.id == pet_id, Pet.owner_id == owner_id).first()
                     if not pet:
-                        print("Invalid ID. Please enter a valid ID that belongs to your pet.")
+                        print(f"""Invalid ID. Please enter a valid ID that belongs to your pet.
+
+ENTER: """)
                         continue
                     else:
-                        field = input(f"What updates would you like to make for {pet.name}? Enter 'name', 'age', 'breed', 'temperament', 'treats', or 'notes' to make those changes to {pet.name}'s record: ").lower()
+                        print('')
+                        field = input(f"""What updates would you like to make for {pet.name}? Enter 'name', 'age', 'breed', 'temperament', 'treats', or 'notes' to make those changes to {pet.name}'s record:
+
+ENTER: """).lower()
                         if field not in ['name', 'age', 'breed', 'temperament', 'treats', 'notes']:
-                            print("Invalid field. Please enter a valid field.")
+                            print(f"""Invalid field. Please enter a valid field.""")
                             continue
                         else:
-                            new_value = input(f"Enter the new value for {field}: ")
+                            new_value = input(f"""Enter the new value for {field}:
+
+ENTER: """)
                             update_pet(session, pet, field, new_value)
                             print_pet(pet)
 
@@ -124,7 +141,9 @@ Would you like to add another pet? Yes/No: """).lower()
                 remove = True
                 while remove:
                     print('')
-                    pet_idx = int(input("Please Provide The 'Pet ID' Of The Pet You Wish To Remove: "))
+                    pet_idx = int(input(f"""Please Provide A Valid 'Pet ID' Of The Pet You Wish To Remove:
+
+ENTER: """))
                     pets = session.query(Pet).filter(Pet.id == pet_idx).first()
                     if pets.owner_id == owner_id:
                         print('')
@@ -136,7 +155,7 @@ Would you like to add another pet? Yes/No: """).lower()
                             print('Your Pet Has been Removed Successfully!')
                     else:
                         print('')
-                        print('Please select a valid Pet ID.')
+                        print('ERROR: Please select a valid Pet ID.')
                         continue
                     rem_another = input('Would you like to remove another pet? (Y/n): \n')
                     if rem_another.lower() in YES:
@@ -155,23 +174,43 @@ Would you like to add another pet? Yes/No: """).lower()
         # appointment_menu = True
         # while appointment_menu:
         print('')
+        print('-'*50)
         print('')
-        print("Your Upcoming Bookings:")
+        print("Your Pets With Upcoming Bookings:")
         print('')
 
-    query = session.query(Pet.id).filter(Pet.owner_id == owner_id).all()
-    pet_ids = [pet[0] for pet in query]
-    print(pet_ids)
-    appointments = session.query(Service).filter(Service.pet_id.in_(pet_ids)).all()
-    print(appointments)
+    query = session.query(Pet).filter(Pet.owner_id == owner_id).all()
+    pets = [pet for pet in query]
+    for pet in pets:
+        print(pet.name)
+    print(f'-'*50)
+    print('')
+    print(f'Appointment(s): ')
+    for pet in pets:
+        services = session.query(Service).filter(Service.pet_id == pet.id).all()
+        for service in services:
+            if service.pet_id == pet.id:
+                print('')
+                print(service)
+                print('-'*50)
+#     print(f"""
+#     ID: {service.id}
+#     Request: {service.request}
+#     Start Date: {service.start_date}
+#     End Date :{service.end_date}
+#     Fee: {service.fee}
+#     Notes: {service.notes}
+# {line}
+#     """)
     # for appointment in appointments:
     #     print(appointment)
     # TODO - We will reformat this printout later.
     request = input("""
-PLEASE ENTER:
-new - Request A New Appointment
-cancel - Cancel An Appointment
-view - View A List Of Our Providers
+Please Enter:
+
+    new - Request A New Appointment
+    cancel - Cancel An Appointment
+    view - View A List Of Our Providers
 
 ENTER: """).lower()
     if request == "new":
@@ -181,33 +220,55 @@ ENTER: """).lower()
         cancel = True
         while cancel:
             print('')
-            service_idx = int(input("Please Provide The 'Service ID' Of The Service You Wish To Cancel: "))
+            service_idx = int(input(f"""Please Provide The 'Service ID' Of The Service You Wish To Cancel:
+
+ENTER: """))
             service = session.query(Service).filter(Service.id == service_idx).first()
             print('')
-            print('Here is your service')
+            print('-'*50)
+            print('')
             print(service)
-            yes_no = input("Do You Wish To Delete This Pet? (Y/n): \n")
-            if yes_no.lower() in YES:
-                        session.delete(service)
-                        session.commit()
-                        print('Your Service Has been Removed Successfully!')
-                        rem_another = input('Would you like to remove another service? (Y/n): \n')
-                        if rem_another.lower() in YES:
-                            continue
-                        elif rem_another.lower() in NO:
-                            print("Routing you back to main menu...")
-                            cancel = False
-                        else:
-                            print("Invalid input. Routing you back to main menu...")
-                            cancel = False
-                            continue
+            print('-'*50)
+            print('')
 
-            else:
-                print('Pet has not been deleted.')
+        # print(service)
+            yes_no = input("Do You Wish To Cancel This Service? (Y/n): ")
+            if yes_no.lower() in YES:
+                session.delete(service)
+                session.commit()
+                print('')
+                print('-'*50)
+                print('')
+                print('Your Service Has been Removed Successfully!')
+                print('')
+                rem_another = input(f'''Would You Like To Remove Another Service? (Y/n):
+
+ENTER: ''')
+                if rem_another.lower() in YES:
+                    continue
+                elif rem_another.lower() in NO:
+                    print("Routing you back to main menu...")
+                    cancel = False
+                else:
+                    print("Invalid input. Routing you back to main menu...")
+                    cancel = False
+                    continue
 
     elif request == "view":
-        pass
-
+        view = True
+        while view:
+            print('')
+            providers = session.query(Provider).all()
+            print('-'*50)
+            print("Available Providers:")
+            print('')
+            for provider in providers:
+                print(f"Provider ID: {provider.id} | Provider Name: {provider.name} | Provider Email: {provider.email}")
+                print('')
+            back = input('Would You Like To Exit? (Y/n): \n')
+            if back.lower() in YES:
+                view = False
+                continue
     else:
         print("Invalid input.")
 

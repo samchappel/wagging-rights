@@ -101,7 +101,7 @@ if __name__ == '__main__':
                     notes=fake.sentence(),
                     fee = f'$' + f'%.2f' % random.uniform(20,40),
                     provider_id = provider.id,
-                    pet_id = random.choice(pets).id
+                    pet_id = random.choice(pets).id,
                 )
                 services.append(service)
 
