@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "d772c696dbaf17d97cec3f12da3e3791f8200be9ff1978f8d0d760723057cfaa"
+            "sha256": "04c7d6b13a4f0154e4b57f3bbcff7133f6692c3b542548f9ae4fcd3b65ed38f8"
         },
         "pipfile-spec": 6,
         "requires": {
@@ -18,11 +18,11 @@
     "default": {
         "alembic": {
             "hashes": [
-                "sha256:dd4718279975ea50d0602a3a00a9811bc9bb4b744ac9abf5fafbf52ac63b1f6a",
-                "sha256:f9cc3fbf0a3c60f8de959bb5c195586618d7ce37e7033e3dfc59396b7889a5e1"
+                "sha256:457eafbdc0769d855c2c92cbafe6b7f319f916c80cf4ed02b8f394f38b51b89d",
+                "sha256:8b48368f6533c064b39c024e1daba15ae7f947eac84185c28c06bbe1301a5497"
             ],
             "index": "pypi",
-            "version": "==1.10.0"
+            "version": "==1.10.2"
         },
         "appnope": {
             "hashes": [
@@ -53,6 +53,14 @@
                 "sha256:fbbce6a29f263178a1f7915c1940bde0ec2b2a967566fe1c65c1dfb7422bd255"
             ],
             "version": "==0.2.0"
+        },
+        "colorama": {
+            "hashes": [
+                "sha256:08695f5cb7ed6e0531a20572697297273c47b8cae5a63ffc6d6ed5c201be6e44",
+                "sha256:4f1d9991f5acc0ca119f9d443620b77f9d6b33703e51011c16baf57afb285fc6"
+            ],
+            "index": "pypi",
+            "version": "==0.4.6"
         },
         "decorator": {
             "hashes": [
@@ -111,11 +119,11 @@
         },
         "ipdb": {
             "hashes": [
-                "sha256:c23b6736f01fd4586cc2ecbebdf79a5eb454796853e1cd8f2ed3b7b91d4a3e93",
-                "sha256:f74c2f741c18b909eaf89f19fde973f745ac721744aa1465888ce45813b63a9c"
+                "sha256:45529994741c4ab6d2388bfa5d7b725c2cf7fe9deffabdb8a6113aa5ed449ed4",
+                "sha256:e3ac6018ef05126d442af680aad863006ec19d02290561ac88b8b1c0b0cfc726"
             ],
             "index": "pypi",
-            "version": "==0.13.11"
+            "version": "==0.13.13"
         },
         "ipython": {
             "hashes": [

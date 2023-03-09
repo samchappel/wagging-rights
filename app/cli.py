@@ -84,9 +84,9 @@ ENTER: """).lower()
     add - Add A Pet
     update - Update A Pet
     remove - Remove A Pet
-    back - return to Task Menu
+    back - Return to Task Menu
 
-ENTER: """).lower()
+ENTER: """).lower() #TERRENCENOTE: 'return' want to change to 'Return'
 
 #"ADD OPTION" START:
                 if option == "add":
@@ -160,8 +160,10 @@ ENTER: """)
                         print('')
                         pet_idx = int(input(f"""Please Provide A Valid 'Pet ID' Of The Pet You Wish To Remove:
 
-ENTER: """))
+ENTER: """)) #TERRENCENOTE: maybe allow user to go back to pet_menu if they change their minds on removing a pet.
                         pets = session.query(Pet).filter(Pet.id == pet_idx).first()
+                        #TERRENCENOTE: if no pets.owner_id matches with owner_id print "no pets to remove"
+                        #return them back to pet_menu
                         if pets.owner_id == owner_id:
                             print('')
                             print(pets)
@@ -180,7 +182,7 @@ ENTER: """))
                                     print('')
                                     print('ERROR: Please select a valid Pet ID.')
                                     continue
-                    else:
+                    else: #TERRENCENOTE: I think lines 185-188 can be removed.
                         print('')
                         print('ERROR: Please select a valid Pet ID.')
                         continue
