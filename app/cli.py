@@ -96,9 +96,11 @@ ENTER: """).lower()
                         treats = input("Favorite Treats: ")
                         notes = input("Additional Notes/Special Needs: ")
                         add_new_pet(session, name, age, breed, temperament, treats, notes, owner_id)
-                        another = input("""
+                        yes_no = input("""
 Would you like to add another pet? Yes/No: """).lower()
-                        if another == "no":
+                        if yes_no.lower() in YES:
+                            continue
+                        elif yes_no.lower() in NO:
                             print("Routing you back to the main menu...")
                             add = False
                             continue
@@ -133,11 +135,13 @@ ENTER: """).lower()
 ENTER: """)
                                 update_pet(session, pet, field, new_value)
                                 print_pet(pet)
-                                another = input("Would you like to update another pet? Yes/No: ").lower()
-                                if another == "no":
+                                yes_no = input("Would you like to update another pet? Yes/No: ").lower()
+                                if yes_no.lower() in YES:
+                                    continue
+                                elif yes_no.lower() in NO:
                                     print("Routing you back to the main menu...")
                                     update = False
-                                    continue
+
 #"UPDATE OPTION" END.
 
 
@@ -164,7 +168,6 @@ ENTER: """))
                                 elif rem_another.lower() in NO:
                                     print("Routing you back to main menu...")
                                     remove = False
-                                    pet_menu = False
                                 else:
                                     print('')
                                     print('ERROR: Please select a valid Pet ID.')
@@ -252,14 +255,14 @@ ENTER: ''')
                             if rem_another.lower() in YES:
                                 continue
                             elif rem_another.lower() in NO:
-                                print("Routing you back to Appointment Menu...")
+                                print("Routing You Back To Appointment Menu...")
                                 cancel = False
                                 appointment_menu = True
-                            else:
-                                print("Invalid input. Routing you back to main menu...")
-                                cancel = False
-                                appointment_menu = False
-                                continue
+                        elif yes_no.lower() in NO:
+                            print("Routing You Back To Appointment Menu...")
+                            cancel = False
+                            appointment_menu = False
+                            continue
 #"CANCEL REQUEST" END.
 
 
