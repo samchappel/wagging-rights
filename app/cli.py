@@ -379,9 +379,17 @@ Please Enter In MM/DD/YYYY Format: """)
                     cancel = True
                     while cancel:
                         print('')
-                        service_idx = int(input(f"""Please Provide The 'Service ID' Of The Service You Wish To Cancel:
+    # NEW - Bianca - Error-handling for invalid menu selection.
+                        service_selection = True
+                        while service_selection:
+                            try:
+                                service_idx = int(input(f"""Please Provide The 'Service ID' Of The Service You Wish To Cancel:
 
 ENTER: """))
+                                service_selection = False
+                            except ValueError:
+                                print("Invalid ID. Please try again.")
+
                         service = session.query(Service).filter(Service.id == service_idx).first()
                         print(line_db)
                         print(service)
