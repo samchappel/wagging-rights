@@ -53,7 +53,8 @@ if __name__ == '__main__':
             session.commit()
             pets.append(pet)
 
-
+        session.query(Provider).delete()
+        session.query(Service).delete()
         providers = []
         for _ in range(10):
             date = fake.date_time_between(start_date="now", end_date="+3d", tzinfo=None)
