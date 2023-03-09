@@ -327,29 +327,38 @@ ENTER: """))
                             service = "Walking"
 
                         print(f"You selected {service}, which costs ${fees[service]}.00 per session.")
-
-                        date_input = input("""
+    # NEW - Bianca - Add error handling for invalid date or time entry.
+                        datetime_entry = True
+                        while datetime_entry:
+                            try:
+                                date_input = input("""
 What date would you like to schedule this service for?
 Enter using MM/DD/YYYY format
 
 ENTER: """)
 
-                        print(f"You selected {date_input} for your service date.")
+                                print(f"You selected {date_input} for your service date.")
 
-                        time_input = input("""
+                                time_input = input("""
 This service can be scheduled between the hours of 8:00 AM and 5:00 PM.
 What time would you like to schedule this service for?
 Enter using HH:MM format (do not include 'AM' or 'PM')
 
 ENTER: """) + ":00"
 
-                        print(f"You selected {time_input} as your start time for this service.")
+                                print(f"You selected {time_input} as your start time for this service.")
 
-                        formatter = "%m/%d/%Y %H:%M:%S"
+                                formatter = "%m/%d/%Y %H:%M:%S"
 
-                        string_datetime = f"{date_input} {time_input}"
+                                string_datetime = f"{date_input} {time_input}"
 
-                        formatted_datetime = datetime.strptime(string_datetime, formatter)
+                                formatted_datetime = datetime.strptime(string_datetime, formatter)
+
+                                print(f"Appointment Date/Time: {formatted_datetime}")
+                                datetime_entry = False
+                            except ValueError:
+                                print("Something went wrong. Please try again.")
+    # END - Bianca - Add error handling for invalid date or time entry.
 
                         add_note = input("Please Enter Any Notes For This Service Request: ")
 
