@@ -157,39 +157,43 @@ Would you like to add another pet? Yes/No: """).lower()
 
 
     elif task == "appointment":
-        appointment_menu = True
-        while appointment_menu:
-            print('')
-            print('')
-            print("Your Upcoming Bookings:")
-            print('')
+        # appointment_menu = True
+        # while appointment_menu:
+        print('')
+        print('')
+        print("Your Upcoming Bookings:")
+        print('')
 
-        appointments = session.query(Service).filter(Service.owner_id == owner_id).all()
-        for appointment in appointments:
-            print(appointment)
-        # TODO - We will reformat this printout later.
-        request = input("""
+    query = session.query(Pet.id).filter(Pet.owner_id == owner_id).all()
+    pet_ids = [pet[0] for pet in query]
+    print(pet_ids)
+    appointments = session.query(Service).filter(Service.pet_id.in_(pet_ids)).all()
+    print(appointments)
+    # for appointment in appointments:
+    #     print(appointment)
+    # TODO - We will reformat this printout later.
+    request = input("""
 PLEASE ENTER:
 new - Request A New Appointment
 cancel - Cancel An Appointment
 view - View A List Of Our Providers
 
 ENTER: """).lower()
-        if request == "new":
-            pass
-        
-        elif request == "cancel":
-            pass
+    if request == "new":
+        pass
+    
+    elif request == "cancel":
+        pass
 
-        elif request == "view":
-            pass
+    elif request == "view":
+        pass
 
-        else:
-            print("Invalid input.")
-        
     else:
-
         print("Invalid input.")
+        
+# else:
+
+#     print("Invalid input.")
 
     # print('Thank you for using the Wagging Rights CLI!\n ')
     # Add loop for pet menu.
