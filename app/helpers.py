@@ -42,3 +42,4 @@ def print_pet(pet):
     print(f"Temperament: {pet.temperament}")
     print(f"Treats: {pet.favorite_treats}")
     print(f"Notes: {pet.notes}")
+
