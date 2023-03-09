@@ -44,9 +44,7 @@ ENTER: """))
     owner_name = session.query(Owner.name).filter(Owner.id == owner_id).first()[0].split(" ")[0]
 
     # Print Welcome, {Name} and prompt them to input whether they would like to manage pets or appointments.
-    print('')
-    print('-'*50)
-    print('')
+    print('\n' + line + '\n')
     print(f"Welcome, {owner_name}! What Would You Like To Do Today?")
     print('')
     print(f'Please Enter:')
@@ -153,19 +151,20 @@ ENTER: """))
                             session.delete(pets)
                             session.commit()
                             print('Your Pet Has been Removed Successfully!')
-                    else:
-                        print('')
-                        print('ERROR: Please select a valid Pet ID.')
-                        continue
-                    rem_another = input('Would you like to remove another pet? (Y/n): \n')
-                    if rem_another.lower() in YES:
-                        continue
-                    elif rem_another.lower() in NO:
-                        print("Routing you back to main menu...")
-                        remove = False
-                    else:
-                        print("Invalid input. Routing you back to main menu...")
-                        remove = False
+                            rem_another = input('Would you like to remove another pet? (Y/n): \n')
+                            if rem_another.lower() in YES:
+                                continue
+                            elif rem_another.lower() in NO:
+                                print("Routing you back to main menu...")
+                                remove = False
+                            else:
+                                print('')
+                                print('ERROR: Please select a valid Pet ID.')
+                                continue
+                else:
+                    print('')
+                    print('ERROR: Please select a valid Pet ID.')
+                    continue
         else:
             print("Invalid input.")
 
