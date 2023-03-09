@@ -1,5 +1,5 @@
 from models import Pet, Service
-
+from datetime import datetime, timedelta, time
 
 
 
@@ -71,10 +71,20 @@ def query_pets(session, owner_id):
 
 
 def book_house_sitting(session, pet_id, start_date, end_date, notes):
+    start_datetime = datetime.combine(start_date, time.min)
+    end_datetime = datetime.combine(end_date, time.min)
+    
     days_of_service = (end_date - start_date).days
     fee = days_of_service * 70
+
+    print(f"pet_id: {pet_id}")
+    print(f"start_date: {start_datetime}")
+    print(f"end_date: {end_datetime}")
+    print(f"notes: {notes}")
+    print(f"request: House-Sit")
+    print(f"fee: {fee}")
     
-    service = Service(pet_id=pet_id, start_date=start_date, end_date=end_date, notes=notes, request="House-Sit", fee=fee)
+    service = Service(pet_id=pet_id, start_date=start_datetime, end_date=end_datetime, notes=notes, request="House-Sit", fee=fee)
     session.add(service)
     session.commit()
     print(f"Thank You! Here Is The Appointment Information We Received: {service}")

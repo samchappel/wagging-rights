@@ -212,8 +212,8 @@ Please Enter In MM/DD/YY Format: """)
             end_date_str = input("""What Date Would You Like This Service To End? 
 Please Enter In MM/DD/YY Format: """)
                              
-            start_date = datetime.strptime(start_date_str, "%m/%d/%Y").date()
-            end_date = datetime.strptime(end_date_str, "%m/%d/%Y").date()
+            start_date = datetime.strptime(start_date_str, "%Y/%m/%d").date()
+            end_date = datetime.strptime(end_date_str, "%Y/%m/%d").date()
 
             notes = input("Please Enter Any Notes For This Service Request: ")
 
