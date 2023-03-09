@@ -273,6 +273,7 @@ ENTER: ''')
                         print('')
                         providers = session.query(Provider).all()
                         print('-'*50)
+                        print('')
                         print("Available Providers:")
                         print('')
                         for provider in providers:
