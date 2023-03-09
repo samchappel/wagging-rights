@@ -210,6 +210,7 @@ ENTER: """))
             date_input = input("""
 What date would you like to schedule this service for?
 Enter using MM/DD/YYYY format
+
 ENTER: """)
             
             print(f"You selected {date_input} for your service date.")
@@ -218,6 +219,7 @@ ENTER: """)
 This service can be scheduled between the hours of 8:00 AM and 5:00 PM.
 What time would you like to schedule this service for?
 Enter using HH:MM format (do not include 'AM' or 'PM')
+
 ENTER: """) + ":00"
 
             print(f"You selected {time_input} as your start time for this service.")
