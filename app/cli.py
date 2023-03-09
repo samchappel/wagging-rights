@@ -98,7 +98,7 @@ Would you like to add another pet? Yes/No: """).lower()
 
             elif option == "update":
                 update = True
-                while update: 
+                while update:
                     pet_id = int(input("You've selected update! Enter the ID of the pet you want to update: "))
                     pet = session.query(Pet).filter(Pet.id == pet_id, Pet.owner_id == owner_id).first()
                     if not pet:
@@ -181,16 +181,41 @@ view - View A List Of Our Providers
 ENTER: """).lower()
     if request == "new":
         pass
-    
+
     elif request == "cancel":
-        pass
+        cancel = True
+        while cancel:
+            print('')
+            service_idx = int(input("Please Provide The 'Service ID' Of The Service You Wish To Cancel: "))
+            service = session.query(Service).filter(Service.id == service_idx).first()
+            print('')
+            print('Here is your service')
+            print(service)
+            yes_no = input("Do You Wish To Delete This Pet? (Y/n): \n")
+            if yes_no.lower() in YES:
+                        session.delete(service)
+                        session.commit()
+                        print('Your Service Has been Removed Successfully!')
+                        rem_another = input('Would you like to remove another service? (Y/n): \n')
+                        if rem_another.lower() in YES:
+                            continue
+                        elif rem_another.lower() in NO:
+                            print("Routing you back to main menu...")
+                            cancel = False
+                        else:
+                            print("Invalid input. Routing you back to main menu...")
+                            cancel = False
+                            continue
+
+            else:
+                print('Pet has not been deleted.')
 
     elif request == "view":
         pass
 
     else:
         print("Invalid input.")
-        
+
 # else:
 
 #     print("Invalid input.")
