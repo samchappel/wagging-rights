@@ -46,9 +46,19 @@ if __name__ == '__main__':
     print("Welcome To Wagging Rights CLI!")
     print('')
     # Ask user to input their ID number (corresponds with owner_id)
-    owner_id = int(input(f"""Please Enter Your Owner Id To Get Started:
+
+# NEW - Bianca - Add error-handling for owner_id input.
+    log_in = True
+    while log_in:
+        try:
+            owner_id = int(input(f"""Please Enter Your Owner Id To Get Started:
 
 ENTER: """))
+            log_in = False
+        except ValueError:
+            print("Invalid ID. Please try again.")
+# END - Bianca - error-handling for owner_id input.
+
     # Use owner_id to query Owners table and return owner name.
     owner_name = session.query(Owner.name).filter(Owner.id == owner_id).first()[0].split(" ")[0]
     # Print Welcome, {Name} and prompt them to input whether they would like to manage pets or appointments.
