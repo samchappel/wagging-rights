@@ -84,7 +84,9 @@ def book_house_sitting(session, pet_id, start_date, end_date, notes):
         print(f"Error adding service to database: {e}")
         session.rollback()
 
-def check_id(session, integer):
-     db_ids = session.query(Owner.id).all()
+# NEW - Bianca - ID error handling helper function.
+def check_id(session, Table, integer):
+     db_ids = session.query(Table.id).all()
      all_ids = [id[0] for id in db_ids]
      return integer in all_ids
+# END - Bianca - Owner_ID error handling helper function.

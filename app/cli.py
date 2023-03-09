@@ -54,7 +54,7 @@ if __name__ == '__main__':
             owner_id = int(input(f"""Please Enter Your Owner Id To Get Started:
 
 ENTER: """))
-            valid_owner_id = check_id(session, owner_id)
+            valid_owner_id = check_id(session, Owner, owner_id)
             if valid_owner_id:
                 log_in = False
             else:
@@ -134,6 +134,7 @@ Would you like to add another pet? Yes/No: """).lower()
                     update = True
                     while update:
                         print(line)
+    # NEW - Bianca - Error-handling for invalid pet ids.
                         pet_selection = True
                         while pet_selection:
                             try:
@@ -143,6 +144,7 @@ ENTER: """))
                                 pet_selection = False
                             except ValueError:
                                 print("Invalid ID. Please try again.")
+    # END - Bianca - Error-handling for invalid pet ids.
 
                         pet = session.query(Pet).filter(Pet.id == pet_id, Pet.owner_id == owner_id).first()
                         if not pet:
