@@ -188,7 +188,11 @@ ENTER: """)
                                 pet_idx = int(input(f"""Please Provide A Valid 'Pet ID' Of The Pet You Wish To Remove:
 
 ENTER: """))
-                                pet_selection = False
+                                valid_pet_id = check_id(session, Pet, pet_idx)
+                                if valid_pet_id:
+                                    pet_selection = False
+                                else:
+                                    print("Invalid ID. Please try again.")
                             except ValueError:
                                 print("Invalid ID. Please try again.")
     # END - Bianca - Add error-handling for invalid pet_id.
