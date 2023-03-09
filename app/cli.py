@@ -285,10 +285,6 @@ Please Enter In MM/DD/YYYY Format: """)
                     book_house_sitting(session, id, start_date, end_date, notes)
                     next = input("Would You Like To Schedule Another Appointment? Y/N: ")
                     print("Routing You Back To The Main Menu...")
-
-                    else:
-                        print("Please Enter A Valid Input.")
-
 #"NEW REQUEST" END.
 
 
@@ -345,11 +341,15 @@ ENTER: ''')
                         back = input('Would You Like To Return To Appointment Menu? (Y/n): \n')
                         if back.lower() in YES:
                             view = False
+#"VIEW PROVIDERS" END
+
+#GO BACK
                 elif request == "back":
                     appointment_menu = False
+
+#If Invalid Input
                 else:
-                    print("Invalid input.")
-#"VIEW PROVIDERS" END
+                    print("Please Enter A Valid Input.")
 
     # print('Thank you for using the Wagging Rights CLI!\n ')
     # Add loop for pet menu.
