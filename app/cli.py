@@ -112,7 +112,15 @@ ENTER: """).lower()
                         print(line)
                         print('')
                         name = input("Name: ")
-                        age = int(input("Age: "))
+    # NEW - Bianca - Add error handling for age input.
+                        age_input = True
+                        while age_input:
+                            try:
+                                age = int(input("Age: "))
+                                age_input = False
+                            except ValueError:
+                                print("Invalid selection. Please try again.")
+    # END - Bianca - Add error handling for age input.
                         breed = input("Breed: ")
                         temperament = input("Temperament: ")
                         treats = input("Favorite Treats: ")
