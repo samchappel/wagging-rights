@@ -6,7 +6,7 @@ from datetime import datetime
 
 from models import Owner, Pet, Provider, Service
 
-from helpers import update_pet, print_pet, add_new_pet, query_pets, create_new_dropwalk
+from helpers import update_pet, print_pet, add_new_pet, query_pets, create_new_dropwalk, book_house_sitting
 
 engine = create_engine('sqlite:///wagging_rights.db')
 session = sessionmaker(bind=engine)()
@@ -235,8 +235,26 @@ ENTER: """) + ":00"
             
 
         elif appt_type == 3:
-            #house-sitting code here
-            pass
+            print("You Selected House-Sitting, which costs $70 per day.")
+            start_date_str = input("""What Date Would You Like This Service To Start? 
+Please Enter In MM/DD/YYYY Format: """)
+                                   
+            print(f"You've selected to book house-sitting beginning {start_date_str}.")
+
+            end_date_str = input("""What Date Would You Like This Service To End? 
+Please Enter In MM/DD/YYYY Format: """)
+                                 
+            print(f"You've selected to book house-sitting through {end_date_str}.")
+
+            start_date = datetime.strptime(start_date_str, "%m/%d/%Y").date()
+            end_date = datetime.strptime(end_date_str, "%m/%d/%Y").date()
+
+            notes = input("Please Enter Any Notes For This Service Request: ")
+
+            book_house_sitting(session, id, start_date, end_date, notes)
+
+            next = input("Would You Like To Schedule Another Appointment? Y/N: ")
+            print("Routing You Back To The Main Menu...")
 
         else:
             print("Please Enter A Valid Input.")

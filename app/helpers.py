@@ -1,6 +1,5 @@
-from models import Pet, Service 
-
-
+from models import Pet, Service
+from datetime import datetime, timedelta, time
 
 def add_new_pet(session, name, age, breed, temperament, treats, notes, owner_id):
     new_pet = Pet(name=name, age=age, breed=breed, temperament=temperament, 
@@ -13,9 +12,6 @@ def add_new_pet(session, name, age, breed, temperament, treats, notes, owner_id)
     print("Thank you for your submission! Your pet has been added successfully. \nHere is the information we received:")
     print('')
     print(new_db_pet)
-
-
-
 
 # def remove_pet(session, idx):
 
@@ -75,3 +71,31 @@ def create_new_dropwalk(session, pet_id, request, start_date, fee):
     session.commit()
     new_db_appt = session.query(Service).filter(Service.id == new_appt.id).first()
     print(new_db_appt)
+
+def book_house_sitting(session, pet_id, start_date, end_date, notes):
+    start_datetime = datetime.combine(start_date, time.min)
+    end_datetime = datetime.combine(end_date, time.min)
+    
+    days_of_service = (end_date - start_date).days
+    fee = days_of_service * 70
+
+    print(f"pet_id: {pet_id}")
+    print(f"start_date: {start_datetime}")
+    print(f"end_date: {end_datetime}")
+    print(f"notes: {notes}")
+    print(f"request: House-Sit")
+    print(f"fee: ${fee}.00")
+    
+    service = Service(pet_id=pet_id, start_date=start_datetime, end_date=end_datetime, notes=notes, request="House-Sit", fee=f"${fee:.2f}")
+    try:
+        # add the new service object to the session and commit the changes
+        session.add(service)
+        session.commit()
+    except Exception as e:
+        # print any errors that occur during the commit process
+        print(f"Error adding service to database: {e}")
+        session.rollback()
+
+    # print the details of the newly added service object
+    print(f"Thank You! Here Is The Appointment Information We Received: {service}")
+    print("Your Appointment Is Pending Until Reviewed By A Provider.")
