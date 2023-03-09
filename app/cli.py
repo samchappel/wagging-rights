@@ -2,9 +2,7 @@
 
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
-
 from models import Owner, Pet, Provider, Service
-
 from helpers import update_pet, print_pet, add_new_pet
 
 engine = create_engine('sqlite:///wagging_rights.db')
@@ -12,7 +10,10 @@ session = sessionmaker(bind=engine)()
 
 YES = ['y', 'ye', 'yes']
 NO = ['n','no']
-line = '-'*50
+line = '-'*50 #adds line
+line_db = '\n' + line + '\n' #adds line with double spacing
+
+
 if __name__ == '__main__':
     #Intro: welcome to the CLI, pick a store
     print('''
@@ -34,20 +35,20 @@ __          __     _____  _____ _____ _   _  _____   _____  _____ _____ _    _ _
 ''')
     print("Welcome To Wagging Rights CLI!")
     print('')
-
     # Ask user to input their ID number (corresponds with owner_id)
     owner_id = int(input(f"""Please Enter Your Owner Id To Get Started:
 
 ENTER: """))
-
     # Use owner_id to query Owners table and return owner name.
     owner_name = session.query(Owner.name).filter(Owner.id == owner_id).first()[0].split(" ")[0]
-
     # Print Welcome, {Name} and prompt them to input whether they would like to manage pets or appointments.
     print('\n' + line + '\n')
     print(f"Welcome, {owner_name}! What Would You Like To Do Today?")
     print('')
     print(f'Please Enter:')
+
+
+#MAIN MENU" START:
     main_menu = True
     while main_menu:
         task = input(f"""
@@ -56,23 +57,19 @@ ENTER: """))
 
 ENTER: """).lower()
 
-    # If 'Pets' bring user to 'Pet Menu' pets.
+
+#"PET MENU" START:
         if task == "pet":
             pet_menu = True
             while pet_menu:
-                print('')
-                print('-'*50)
-                print('')
+                print('\n' + line + '\n')
                 print("Your Pet Profile(s):")
                 print('')
-
-            # Use owner_id to query Pets table and return all pets associated with that owner.
+                # Use owner_id to query Pets table and return all pets associated with that owner.
                 pets = session.query(Pet).filter(Pet.owner_id == owner_id).all()
                 for pet in pets:
                     print(pet)
-                # TODO - We will reformat this printout later.
-
-            # Prompt user to select from options to Add Pet, Update Pet, Remove Pet
+                # Prompt user to select from options to Add Pet, Update Pet, Remove Pet
                 option = input("""Please Enter:
 
     add - Add A Pet
@@ -82,13 +79,15 @@ ENTER: """).lower()
 
 ENTER: """).lower()
 
+
+#"ADD OPTION" START:
                 if option == "add":
                     add = True
                     while add:
-                        print('')
+                        print('\n' +'\n')
                         print('')
                         print("Please Provide Information About Your New Pet!")
-                        print('-'*50)
+                        print(line)
                         print('')
                         name = input("Name: ")
                         age = int(input("Age: "))
@@ -103,11 +102,14 @@ Would you like to add another pet? Yes/No: """).lower()
                             print("Routing you back to the main menu...")
                             add = False
                             continue
+#"ADD OPTION" END.
 
+
+#"UPDATE OPTION" START:
                 elif option == "update":
                     update = True
                     while update:
-                        print('-'*50)
+                        print(line)
                         pet_id = int(input(f"""You've Selected Update! Enter The ID Of The Pet You Want To Update:
 
 ENTER: """))
@@ -131,13 +133,15 @@ ENTER: """).lower()
 ENTER: """)
                                 update_pet(session, pet, field, new_value)
                                 print_pet(pet)
-
                                 another = input("Would you like to update another pet? Yes/No: ").lower()
                                 if another == "no":
                                     print("Routing you back to the main menu...")
                                     update = False
                                     continue
+#"UPDATE OPTION" END.
 
+
+#"REMOVE OPTION" START:
                 elif option == "remove":
                     remove = True
                     while remove:
@@ -169,31 +173,34 @@ ENTER: """))
                         print('')
                         print('ERROR: Please select a valid Pet ID.')
                         continue
+#"REMOVE OPTION" END.
 
+
+#"BACK OPTION" START:
                 elif option == 'back':
                     pet_menu = False
-
+#"BACK OPTION" END.
 
 
                 else:
                     print("Invalid input.")
+#"PET MENU" END.
 
 
+
+
+
+#"APPOINTMENT MENU" START:
         elif task == "appointment":
             appointment_menu = True
             while appointment_menu:
-                print('')
-                print('-'*50)
-                print('')
+                print(line_db)
                 print("Your Pets With Upcoming Bookings:")
-                print('')
-
+                print(line_db)
                 query = session.query(Pet).filter(Pet.owner_id == owner_id).all()
                 pets = [pet for pet in query]
                 for pet in pets:
                     print(pet.name)
-                print(f'-'*50)
-                print('')
                 print(f'Appointment(s): ')
                 for pet in pets:
                     services = session.query(Service).filter(Service.pet_id == pet.id).all()
@@ -201,19 +208,7 @@ ENTER: """))
                         if service.pet_id == pet.id:
                             print('')
                             print(service)
-                            print('-'*50)
-#     print(f"""
-#     ID: {service.id}
-#     Request: {service.request}
-#     Start Date: {service.start_date}
-#     End Date :{service.end_date}
-#     Fee: {service.fee}
-#     Notes: {service.notes}
-# {line}
-#     """)
-    # for appointment in appointments:
-    #     print(appointment)
-    # TODO - We will reformat this printout later.
+                            print(line)
                 request = input("""
 Please Enter:
 
@@ -223,9 +218,15 @@ Please Enter:
     back - Go Back To Main Menu
 
 ENTER: """).lower()
+
+
+#"NEW REQUEST" START:
                 if request == "new":
                     pass
+#"NEW REQUEST" END.
 
+
+#"CANCEL REQUEST" START:
                 elif request == "cancel":
                     cancel = True
                     while cancel:
@@ -234,21 +235,15 @@ ENTER: """).lower()
 
 ENTER: """))
                         service = session.query(Service).filter(Service.id == service_idx).first()
-                        print('')
-                        print('-'*50)
-                        print('')
+                        print(line_db)
                         print(service)
-                        print('-'*50)
+                        print(line)
                         print('')
-
-        # print(service)
                         yes_no = input("Do You Wish To Cancel This Service? (Y/n): ")
                         if yes_no.lower() in YES:
                             session.delete(service)
                             session.commit()
-                            print('')
-                            print('-'*50)
-                            print('')
+                            print(line_db)
                             print('Your Service Has been Removed Successfully!')
                             print('')
                             rem_another = input(f'''Would You Like To Remove Another Service? (Y/n):
@@ -264,9 +259,11 @@ ENTER: ''')
                                 print("Invalid input. Routing you back to main menu...")
                                 cancel = False
                                 appointment_menu = False
-
                                 continue
+#"CANCEL REQUEST" END.
 
+
+#"VIEW PROVIDERS" START:
                 elif request == "view":
                     view = True
                     while view:
@@ -282,16 +279,11 @@ ENTER: ''')
                         back = input('Would You Like To Return To Appointment Menu? (Y/n): \n')
                         if back.lower() in YES:
                             view = False
-
                 elif request == "back":
                     appointment_menu = False
-
                 else:
                     print("Invalid input.")
-
-# else:
-
-#     print("Invalid input.")
+#"VIEW PROVIDERS" END
 
     # print('Thank you for using the Wagging Rights CLI!\n ')
     # Add loop for pet menu.

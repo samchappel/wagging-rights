@@ -7,7 +7,7 @@ engine = create_engine('sqlite:///wagging_rights.db', echo=True)
 
 Base = declarative_base()
 
-#hi
+#PET, OWNER, PROVIDER, SERVICE CLASSES
 class Pet(Base):
     __tablename__ = 'pets'
     __table_args__ = (PrimaryKeyConstraint('id'),)
@@ -20,7 +20,6 @@ class Pet(Base):
     temperament = Column(String())
     favorite_treats = Column(String())
     notes = Column(String())
-
     owner_id = Column(Integer(), ForeignKey('owners.id'))
 
     def __repr__(self):
@@ -62,7 +61,7 @@ class Provider(Base):
 
     id = Column(Integer())
     name = Column(String())
-    availability = Column(String()) #how can we show availability?
+    availability = Column(String())
     email = Column(String())
     phone = Column(Integer())
     # hourly_rate = Column(String())
