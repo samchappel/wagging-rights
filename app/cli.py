@@ -225,7 +225,70 @@ ENTER: """).lower()
 
 #"NEW REQUEST" START:
                 if request == "new":
-                    pass
+                    print('')
+                    print("Which pet are you scheduling this appointment for?")
+                    print('')
+                    query_pets(session, owner_id)
+                    id = int(input("Enter ID Of Pet You Would Like To Schedule For: "))
+
+                    name = session.query(Pet.name).filter(Pet.id == id).first()[0]
+
+                    appt_type = int(input(f"""What Type Of Appointment Are You Scheduling for {name}?
+PLEASE ENTER:
+1 - Drop-in,
+2 - Walking,
+3 - House-sitting
+
+ENTER: """))
+                    fees = {"Drop-In": 50, "Walking": 35, "House-Sitting": 70}
+                    if appt_type == 1 or appt_type == 2:
+                        if appt_type == 1:
+                            service = "Drop-In"
+                        elif appt_type == 2:
+                            service = "Walking"
+                        print(f"You selected {service}, which costs ${fees[service]}.00 per session.")
+                        date_input = input("""
+What date would you like to schedule this service for?
+Enter using MM/DD/YYYY format
+
+ENTER: """)
+                        print(f"You selected {date_input} for your service date.")
+
+                        time_input = input("""
+This service can be scheduled between the hours of 8:00 AM and 5:00 PM.
+What time would you like to schedule this service for?
+Enter using HH:MM format (do not include 'AM' or 'PM')
+
+ENTER: """) + ":00"
+                        print(f"You selected {time_input} as your start time for this service.")
+                        formatter = "%m/%d/%Y %H:%M:%S"
+                        string_datetime = f"{date_input} {time_input}"
+                        formatted_datetime = datetime.strptime(string_datetime, formatter)
+                        create_new_dropwalk(session=session, pet_id=id,
+                                            request=service, start_date=formatted_datetime, fee=f"${fees[service]}.00")
+
+
+                    elif appt_type == 3:
+                        print("You Selected House-Sitting, which costs $70 per day.")
+                        start_date_str = input("""What Date Would You Like This Service To Start?
+Please Enter In MM/DD/YYYY Format: """)
+
+                    print(f"You've selected to book house-sitting beginning {start_date_str}.")
+
+                    end_date_str = input("""What Date Would You Like This Service To End?
+Please Enter In MM/DD/YYYY Format: """)
+
+                    print(f"You've selected to book house-sitting through {end_date_str}.")
+                    start_date = datetime.strptime(start_date_str, "%m/%d/%Y").date()
+                    end_date = datetime.strptime(end_date_str, "%m/%d/%Y").date()
+                    notes = input("Please Enter Any Notes For This Service Request: ")
+                    book_house_sitting(session, id, start_date, end_date, notes)
+                    next = input("Would You Like To Schedule Another Appointment? Y/N: ")
+                    print("Routing You Back To The Main Menu...")
+
+                    else:
+                        print("Please Enter A Valid Input.")
+
 #"NEW REQUEST" END.
 
 
