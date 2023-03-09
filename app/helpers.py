@@ -1,4 +1,4 @@
-from models import Pet 
+from models import Pet, Service 
 
 
 
@@ -67,3 +67,11 @@ def query_pets(session, owner_id):
     pets = session.query(Pet).filter(Pet.owner_id == owner_id).all()
     for pet in pets:
                 print(pet)
+
+def create_new_dropwalk(session, pet_id, request, start_date, fee):
+    new_appt = Service(pet_id=pet_id, request=request, 
+                    start_date=start_date, fee=fee)
+    session.add(new_appt)
+    session.commit()
+    new_db_appt = session.query(Service).filter(Service.id == new_appt.id).first()
+    print(new_db_appt)

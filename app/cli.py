@@ -6,7 +6,7 @@ from datetime import datetime
 
 from models import Owner, Pet, Provider, Service
 
-from helpers import update_pet, print_pet, add_new_pet, query_pets
+from helpers import update_pet, print_pet, add_new_pet, query_pets, create_new_dropwalk
 
 engine = create_engine('sqlite:///wagging_rights.db')
 session = sessionmaker(bind=engine)()
@@ -228,12 +228,8 @@ ENTER: """) + ":00"
 
             formatted_datetime = datetime.strptime(string_datetime, formatter)
 
-            new_appt = Service(pet_id=id, request=service, 
-                               start_date=formatted_datetime, fee=f"${fees[service]}.00")
-            session.add(new_appt)
-            session.commit()
-            new_db_appt = session.query(Service).filter(Service.id == new_appt.id).first()
-            print(new_db_appt)
+            create_new_dropwalk(session=session, pet_id=id, 
+                                request=service, start_date=formatted_datetime, fee=f"${fees[service]}.00")
             
 
         elif appt_type == 3:
