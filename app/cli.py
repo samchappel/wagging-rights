@@ -181,9 +181,17 @@ ENTER: """)
                     remove = True
                     while remove:
                         print('')
-                        pet_idx = int(input(f"""Please Provide A Valid 'Pet ID' Of The Pet You Wish To Remove:
+    # NEW - Bianca - Add error-handling for invalid pet_id.
+                        pet_selection = True
+                        while pet_selection:
+                            try:
+                                pet_idx = int(input(f"""Please Provide A Valid 'Pet ID' Of The Pet You Wish To Remove:
 
 ENTER: """))
+                                pet_selection = False
+                            except ValueError:
+                                print("Invalid ID. Please try again.")
+    # END - Bianca - Add error-handling for invalid pet_id.
                         pets = session.query(Pet).filter(Pet.id == pet_idx).first()
                         if pets.owner_id == owner_id:
                             print('')
