@@ -289,14 +289,25 @@ ENTER: """).lower()
 
                     name = session.query(Pet.name).filter(Pet.id == id).first()[0]
 
-                    appt_type = int(input(f"""What Type Of Appointment Are You Scheduling for {name}?
+    # NEW - Bianca - Error-handling for invalid menu selection.
+                    appt_selection = True
+                    while appt_selection:
+                        try:
+
+                            appt_type = int(input(f"""What Type Of Appointment Are You Scheduling for {name}?
 PLEASE ENTER:
 1 - Drop-in,
 2 - Walking,
 3 - House-sitting
 
 ENTER: """))
-
+                            if appt_type in [1, 2, 3]:
+                                appt_selection = False
+                            else:
+                                print("Invalid selection. Please try again.")
+                        except ValueError:
+                            print("Invalid selection. Please try again.")
+    # END - Bianca - Error-handling for invalid menu selection.
                     fees = {"Drop-In": 50, "Walking": 35, "House-Sitting": 70}
 
                     if appt_type == 1 or appt_type == 2:
