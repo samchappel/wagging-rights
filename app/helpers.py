@@ -1,4 +1,4 @@
-from models import Pet, Service
+from models import Pet, Service, Owner
 from datetime import datetime, timedelta, time
 
 def add_new_pet(session, name, age, breed, temperament, treats, notes, owner_id):
@@ -83,3 +83,8 @@ def book_house_sitting(session, pet_id, start_date, end_date, notes):
         # print any errors that occur during the commit process
         print(f"Error adding service to database: {e}")
         session.rollback()
+
+def check_id(session, integer):
+     db_ids = session.query(Owner.id).all()
+     all_ids = [id[0] for id in db_ids]
+     return integer in all_ids

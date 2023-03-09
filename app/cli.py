@@ -8,7 +8,7 @@ import colorama
 
 from models import Owner, Pet, Provider, Service
 
-from helpers import update_pet, print_pet, add_new_pet, query_pets, create_new_dropwalk, book_house_sitting
+from helpers import update_pet, print_pet, add_new_pet, query_pets, create_new_dropwalk, book_house_sitting, check_id
 
 engine = create_engine('sqlite:///wagging_rights.db')
 session = sessionmaker(bind=engine)()
@@ -54,7 +54,11 @@ if __name__ == '__main__':
             owner_id = int(input(f"""Please Enter Your Owner Id To Get Started:
 
 ENTER: """))
-            log_in = False
+            valid_id = check_id(session, owner_id)
+            if valid_id:
+                log_in = False
+            else:
+                print("Invalid ID. Please try again.")
         except ValueError:
             print("Invalid ID. Please try again.")
 # END - Bianca - error-handling for owner_id input.
