@@ -2,7 +2,7 @@ from models import Pet, Service
 from datetime import datetime, timedelta, time
 
 def add_new_pet(session, name, age, breed, temperament, treats, notes, owner_id):
-    new_pet = Pet(name=name, age=age, breed=breed, temperament=temperament, 
+    new_pet = Pet(name=name, age=age, breed=breed, temperament=temperament,
                 favorite_treats=treats, notes=notes, owner_id=owner_id)
     session.add(new_pet)
     session.commit()
@@ -12,23 +12,6 @@ def add_new_pet(session, name, age, breed, temperament, treats, notes, owner_id)
     print("Thank you for your submission! Your pet has been added successfully. \nHere is the information we received:")
     print('')
     print(new_db_pet)
-
-# def remove_pet(session, idx):
-
-
-                # session.show(pet)
-                # print('Do You Still Wish To Remove?')
-                # new_db_pet = session.query(Pet).filter(Pet.id == id).first()
-                # print('')
-                # print('')
-                # print('Thank You For Your Submission!')
-                # print('')
-                # print(new_db_pet)
-                # print('Your Pet Has Been Removed Successfully!')
-
-
-
-# from models import Service
 
 def update_pet(session, pet, field, new_value):
     if field == "name":
@@ -46,9 +29,9 @@ def update_pet(session, pet, field, new_value):
     else:
         print("Invalid field. Please enter a valid field.")
         return
-
     session.commit()
     print(f"{pet.name}'s {field} has been updated to {new_value}.")
+
 
 def print_pet(pet):
     print(f"ID: {pet.id}")
@@ -100,5 +83,3 @@ def book_house_sitting(session, pet_id, start_date, end_date, notes):
         # print any errors that occur during the commit process
         print(f"Error adding service to database: {e}")
         session.rollback()
-
-    

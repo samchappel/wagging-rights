@@ -7,7 +7,7 @@ engine = create_engine('sqlite:///wagging_rights.db', echo=True)
 
 Base = declarative_base()
 
-#hi
+#PET, OWNER, PROVIDER, SERVICE CLASSES
 class Pet(Base):
     __tablename__ = 'pets'
     __table_args__ = (PrimaryKeyConstraint('id'),)
@@ -20,10 +20,10 @@ class Pet(Base):
     temperament = Column(String())
     favorite_treats = Column(String())
     notes = Column(String())
-
     owner_id = Column(Integer(), ForeignKey('owners.id'))
 
     def __repr__(self):
+        line = '-'*50
         return f"Id: {self.id}, \n" \
             + f"Name: {self.name}, \n" \
             + f"Age: {self.age}, \n" \
@@ -32,7 +32,9 @@ class Pet(Base):
             + f"Treats: {self.favorite_treats}, \n" \
             + f"Notes: {self.notes}, \n" \
             + f"Owner ID: {self.owner_id} \n" \
-            + f""
+            + f"\n" \
+            + f"{line}" \
+            + f"\n" \
 
 class Owner(Base):
     __tablename__ = 'owners'
@@ -59,7 +61,7 @@ class Provider(Base):
 
     id = Column(Integer())
     name = Column(String())
-    availability = Column(String()) #how can we show availability?
+    availability = Column(String())
     email = Column(String())
     phone = Column(Integer())
     # hourly_rate = Column(String())
@@ -89,11 +91,11 @@ class Service(Base):
     provider = relationship('Provider', backref=backref('providers'))
 
     def __repr__(self):
-        return f"Id: {self.id}, "\
-            +f"Request: {self.request}, "\
-            +f"Start Date: {self.start_date}, "\
-            +f"End Date: {self.end_date}, "\
-            +f"Fee: {self.fee}, "\
-            +f"Notes: {self.notes}, "\
+        return f"Service ID: {self.id}, \n"\
+            +f"Request: {self.request}, \n"\
+            +f"Start Date: {self.start_date}, \n"\
+            +f"End Date: {self.end_date}, \n"\
+            +f"Fee: {self.fee}, \n"\
+            +f"Notes: {self.notes}, \n"\
 
 
