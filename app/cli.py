@@ -208,19 +208,18 @@ ENTER: """))
             print("You Selected House-Sitting, which costs $70 per day.")
             start_date_str = input("""What Date Would You Like This Service To Start? 
 Please Enter In MM/DD/YYYY Format: """)
+                                   
+            print(f"You've selected to book house-sitting beginning {start_date_str}.")
 
             end_date_str = input("""What Date Would You Like This Service To End? 
 Please Enter In MM/DD/YYYY Format: """)
+                                 
+            print(f"You've selected to book house-sitting through {end_date_str}.")
 
             start_date = datetime.strptime(start_date_str, "%m/%d/%Y").date()
             end_date = datetime.strptime(end_date_str, "%m/%d/%Y").date()
 
             notes = input("Please Enter Any Notes For This Service Request: ")
-            # debug print statements
-            print(f"pet_id: {id}")
-            print(f"start_date: {start_date}")
-            print(f"end_date: {end_date}")
-            print(f"notes: {notes}")
 
             book_house_sitting(session, id, start_date, end_date, notes)
 

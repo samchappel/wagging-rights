@@ -84,7 +84,7 @@ def book_house_sitting(session, pet_id, start_date, end_date, notes):
     print(f"request: House-Sit")
     print(f"fee: ${fee}.00")
     
-    service = Service(pet_id=pet_id, start_date=start_datetime, end_date=end_datetime, notes=notes, request="House-Sit", fee=fee)
+    service = Service(pet_id=pet_id, start_date=start_datetime, end_date=end_datetime, notes=notes, request="House-Sit", fee=f"${fee:.2f}")
     try:
         # add the new service object to the session and commit the changes
         session.add(service)
