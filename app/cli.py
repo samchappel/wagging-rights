@@ -5,7 +5,7 @@ from sqlalchemy.orm import sessionmaker
 
 from models import Owner, Pet, Provider, Service
 
-from helpers import update_pet, print_pet, add_new_pet
+from helpers import update_pet, print_pet, add_new_pet, query_pets
 
 engine = create_engine('sqlite:///wagging_rights.db')
 session = sessionmaker(bind=engine)()
@@ -62,9 +62,7 @@ ENTER: """).lower()
             print('')
 
         # Use owner_id to query Pets table and return all pets associated with that owner.
-            pets = session.query(Pet).filter(Pet.owner_id == owner_id).all()
-            for pet in pets:
-                print(pet)
+            query_pets(session, owner_id)
             # TODO - We will reformat this printout later.
 
         # Prompt user to select from options to Add Pet, Update Pet, Remove Pet
@@ -180,7 +178,41 @@ view - View A List Of Our Providers
 
 ENTER: """).lower()
     if request == "new":
-        pass
+        print('')
+        print("Which pet are you scheduling this appointment for?")
+        print('')
+        query_pets(session, owner_id)
+        id = int(input("Enter ID Of Pet You Would Like To Schedule For: "))
+
+        name = session.query(Pet.name).filter(Pet.id == id).first()[0]
+
+        appt_type = int(input(f"""What Type Of Appointment Are You Scheduling for {name}? 
+PLEASE ENTER: 
+1 - Drop-in, 
+2 - Walking, 
+3 - House-sitting
+
+ENTER: """))
+        
+        if appt_type == 1:
+            #drop-in code here
+            pass
+
+        elif appt_type == 2:
+            #walking code here
+            pass
+
+        elif appt_type == 3:
+            #house-sitting code here
+            pass
+
+        else:
+            print("Please Enter A Valid Input.")
+
+
+        
+
+
     
     elif request == "cancel":
         pass

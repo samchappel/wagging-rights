@@ -62,3 +62,8 @@ def print_pet(pet):
     print(f"Temperament: {pet.temperament}")
     print(f"Treats: {pet.favorite_treats}")
     print(f"Notes: {pet.notes}")
+
+def query_pets(session, owner_id):
+    pets = session.query(Pet).filter(Pet.owner_id == owner_id).all()
+    for pet in pets:
+                print(pet)
