@@ -1,4 +1,5 @@
-from models import Pet 
+from models import Pet, Service
+
 
 
 
@@ -67,3 +68,14 @@ def query_pets(session, owner_id):
     pets = session.query(Pet).filter(Pet.owner_id == owner_id).all()
     for pet in pets:
                 print(pet)
+
+
+def book_house_sitting(session, pet_id, start_date, end_date, notes):
+    days_of_service = (end_date - start_date).days
+    fee = days_of_service * 70
+    
+    service = Service(pet_id=pet_id, start_date=start_date, end_date=end_date, notes=notes, request="House-Sit", fee=fee)
+    session.add(service)
+    session.commit()
+    print(f"Thank You! Here Is The Appointment Information We Received: {service}")
+    print("Your Appointment Is Pending Until Reviewed By A Provider.")
