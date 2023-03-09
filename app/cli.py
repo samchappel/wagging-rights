@@ -271,7 +271,21 @@ ENTER: """).lower()
                     print("Which pet are you scheduling this appointment for?")
                     print('')
                     query_pets(session, owner_id)
-                    id = int(input("Enter ID Of Pet You Would Like To Schedule For: "))
+    # NEW - Bianca - Error-handling for invalid pet ids.
+                    pet_selection = True
+                    while pet_selection:
+                        try:
+                            id = int(input("Enter ID Of Pet You Would Like To Schedule For: "))
+                            valid_pet_id = check_id(session, Pet, id)
+                            if valid_pet_id:
+                                pet_selection = False
+                            else:
+                                print("Invalid ID. Please try again.")
+                                
+                        except ValueError:
+                            print("Invalid ID. Please try again.")
+
+    # END - Bianca - Error-handling for invalid pet ids.
 
                     name = session.query(Pet.name).filter(Pet.id == id).first()[0]
 
