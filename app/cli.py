@@ -207,17 +207,23 @@ ENTER: """))
         elif appt_type == 3:
             print("You Selected House-Sitting, which costs $70 per day.")
             start_date_str = input("""What Date Would You Like This Service To Start? 
-Please Enter In MM/DD/YY Format: """)
+Please Enter In MM/DD/YYYY Format: """)
 
             end_date_str = input("""What Date Would You Like This Service To End? 
-Please Enter In MM/DD/YY Format: """)
-                             
-            start_date = datetime.strptime(start_date_str, "%Y/%m/%d").date()
-            end_date = datetime.strptime(end_date_str, "%Y/%m/%d").date()
+Please Enter In MM/DD/YYYY Format: """)
+
+            start_date = datetime.strptime(start_date_str, "%m/%d/%Y").date()
+            end_date = datetime.strptime(end_date_str, "%m/%d/%Y").date()
 
             notes = input("Please Enter Any Notes For This Service Request: ")
+            # debug print statements
+            print(f"pet_id: {id}")
+            print(f"start_date: {start_date}")
+            print(f"end_date: {end_date}")
+            print(f"notes: {notes}")
 
             book_house_sitting(session, id, start_date, end_date, notes)
+
             next = input("Would You Like To Schedule Another Appointment? Y/N: ")
             print("Routing You Back To The Main Menu...")
 

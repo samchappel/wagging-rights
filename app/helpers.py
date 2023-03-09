@@ -82,10 +82,18 @@ def book_house_sitting(session, pet_id, start_date, end_date, notes):
     print(f"end_date: {end_datetime}")
     print(f"notes: {notes}")
     print(f"request: House-Sit")
-    print(f"fee: {fee}")
+    print(f"fee: ${fee}.00")
     
     service = Service(pet_id=pet_id, start_date=start_datetime, end_date=end_datetime, notes=notes, request="House-Sit", fee=fee)
-    session.add(service)
-    session.commit()
+    try:
+        # add the new service object to the session and commit the changes
+        session.add(service)
+        session.commit()
+    except Exception as e:
+        # print any errors that occur during the commit process
+        print(f"Error adding service to database: {e}")
+        session.rollback()
+
+    # print the details of the newly added service object
     print(f"Thank You! Here Is The Appointment Information We Received: {service}")
     print("Your Appointment Is Pending Until Reviewed By A Provider.")
