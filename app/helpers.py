@@ -1,8 +1,6 @@
 from models import Pet, Service
 from datetime import datetime, timedelta, time
 
-
-
 def add_new_pet(session, name, age, breed, temperament, treats, notes, owner_id):
     new_pet = Pet(name=name, age=age, breed=breed, temperament=temperament, 
                 favorite_treats=treats, notes=notes, owner_id=owner_id)
@@ -14,9 +12,6 @@ def add_new_pet(session, name, age, breed, temperament, treats, notes, owner_id)
     print("Thank you for your submission! Your pet has been added successfully. \nHere is the information we received:")
     print('')
     print(new_db_pet)
-
-
-
 
 # def remove_pet(session, idx):
 
@@ -69,6 +64,13 @@ def query_pets(session, owner_id):
     for pet in pets:
                 print(pet)
 
+def create_new_dropwalk(session, pet_id, request, start_date, fee):
+    new_appt = Service(pet_id=pet_id, request=request, 
+                    start_date=start_date, fee=fee)
+    session.add(new_appt)
+    session.commit()
+    new_db_appt = session.query(Service).filter(Service.id == new_appt.id).first()
+    print(new_db_appt)
 
 def book_house_sitting(session, pet_id, start_date, end_date, notes):
     start_datetime = datetime.combine(start_date, time.min)
