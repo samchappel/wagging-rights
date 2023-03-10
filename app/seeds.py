@@ -2,7 +2,7 @@ from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 from models import (Pet, Owner, Service, Provider)
 from faker import Faker
-from datetime import datetime, timedelta
+from datetime import timedelta
 import random
 
 
