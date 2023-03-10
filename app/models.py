@@ -1,5 +1,5 @@
-from sqlalchemy import create_engine, func
-from sqlalchemy import (PrimaryKeyConstraint, Table, Column, String, Integer, DateTime, ForeignKey)
+from sqlalchemy import create_engine
+from sqlalchemy import (PrimaryKeyConstraint, Column, String, Integer, DateTime, ForeignKey)
 from sqlalchemy.orm import relationship, backref
 from sqlalchemy.ext.declarative import declarative_base
 
