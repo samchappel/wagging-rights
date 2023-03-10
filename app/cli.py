@@ -45,9 +45,6 @@ if __name__ == '__main__':
     print("Welcome to Wagging Rights CLI!")
     print('')
 
-    # Ask user to input their ID number (corresponds with owner_id)
-
-# NEW - Bianca - Add error-handling for owner_id input.
     log_in = True
     while log_in:
         try:
@@ -61,16 +58,13 @@ ENTER: """))
                 print("Invalid ID. Please try again.")
         except ValueError:
             print("Invalid ID. Please try again.")
-# END - Bianca - error-handling for owner_id input.
 
-    # Use owner_id to query Owners table and return owner name.
     owner_name = session.query(Owner.name).filter(Owner.id == owner_id).first()[0].split(" ")[0]
-    # Print Welcome, {Name} and prompt them to input whether they would like to manage pets or appointments.
+
     print('\n' + line + '\n')
     print(f"Welcome, {owner_name}! What would you like to do today?")
     print('')
     print(f'Please Enter:')
-
 
 #MAIN MENU" START:
     main_menu = True
@@ -98,12 +92,10 @@ ENTER: """))
                 print('\n' + line + '\n')
                 print("Your Pet Profile(s):")
                 print('')
-                # Use owner_id to query Pets table and return all pets associated with that owner.
                 pets = session.query(Pet).filter(Pet.owner_id == owner_id).all()
                 for pet in pets:
                     pet_table = pd.Series([pet.id,pet.name,pet.age,pet.breed,pet.temperament,pet.favorite_treats,pet.notes,pet.owner_id], index=['Pet ID','Pet Name','Pet Age','Pet Breed','Pet Temperament','Pet Treats','Pet Notes','Pet Owner ID'])
                     print(pet_table.to_string() + '\n' +line)
-                # Prompt user to select from options to Add Pet, Update Pet, Remove Pet
                 pet_menu_selection = True
                 while pet_menu_selection:
                     try:
@@ -131,9 +123,9 @@ ENTER: """))
                         print("Please provide information about your new pet!")
                         print(line)
                         print('')
-#work: lines 105-110 use pandas
+
                         name = input("Name: ")
-    # NEW - Bianca - Add error handling for age input.
+
                         age_input = True
                         while age_input:
                             try:
@@ -141,7 +133,7 @@ ENTER: """))
                                 age_input = False
                             except ValueError:
                                 print("Invalid selection. Please try again.")
-    # END - Bianca - Add error handling for age input.
+
                         breed = input("Breed: ")
                         temperament = input("Temperament: ")
                         treats = input("Favorite Treats: ")
@@ -164,7 +156,6 @@ Would you like to add another pet? Y/N: """).lower()
                     while update:
                         print(line)
 
-    # NEW - Bianca - Error-handling for invalid pet ids.
                         pet_selection = True
                         while pet_selection:
                             try:
@@ -174,7 +165,7 @@ ENTER: """))
                                 pet_selection = False
                             except ValueError:
                                 print("Invalid ID. Please try again.")
-    # END - Bianca - Error-handling for invalid pet ids.
+
                         if pet_id == 0:
                             update = False
                             continue
@@ -226,7 +217,6 @@ ENTER: """)
                     while remove:
                         print('')
 
-    # NEW - Bianca - Add error-handling for invalid pet_id.
                         pet_selection = True
                         while pet_selection:
                             try:
@@ -240,7 +230,7 @@ ENTER: """))
                                     print("Invalid ID. Please try again.")
                             except ValueError:
                                 print("Invalid ID. Please try again.")
-    # END - Bianca - Add error-handling for invalid pet_id.
+
                         if pet_idx == 0:
                             remove = False
                             continue
@@ -333,7 +323,6 @@ ENTER: """))
                     print('')
                     query_pets(session, owner_id)
 
-    # NEW - Bianca - Error-handling for invalid pet ids.
                     pet_selection = True
                     while pet_selection:
                         try:
@@ -352,11 +341,8 @@ ENTER: """))
                         except ValueError:
                             print("Invalid ID. Please try again.")
 
-    # END - Bianca - Error-handling for invalid pet ids.
-
                     name = session.query(Pet.name).filter(Pet.id == id).first()[0]
 
-    # NEW - Bianca - Error-handling for invalid menu selection.
                     appt_selection = True
                     while appt_selection:
                         try:
@@ -375,7 +361,6 @@ ENTER: """))
                                 print("Invalid selection. Please try again.")
                         except ValueError:
                             print("Invalid selection. Please try again.")
-    # END - Bianca - Error-handling for invalid menu selection.
 
                     fees = {"Drop-In": 50, "Walking": 35, "House-Sitting": 70}
 
@@ -388,7 +373,7 @@ ENTER: """))
                             service = "Walking"
 
                         print(f"You selected {service}, which costs ${fees[service]}.00 per session.")
-    # NEW - Bianca - Add error handling for invalid date or time entry.
+
                         datetime_entry = True
                         while datetime_entry:
                             try:
@@ -419,7 +404,6 @@ ENTER: """) + ":00"
                                 datetime_entry = False
                             except ValueError:
                                 print("Something went wrong. Please try again.")
-    # END - Bianca - Add error handling for invalid date or time entry.
 
                         add_note = input("Please enter any notes for this service request: ")
 
@@ -427,7 +411,6 @@ ENTER: """) + ":00"
 
                     elif appt_type == 3:
 
-    # NEW - Bianca - Add error-handling for invalid date/time entry.
                         datetime_entry = True
                         while datetime_entry:
                             try:
@@ -451,7 +434,6 @@ Please Enter In MM/DD/YYYY Format: """)
                                 datetime_entry = False
                             except ValueError:
                                 print("Something went wrong. Please try again.")
-    # END - Bianca - Add error-handling for invalid date/time entry.
 
                         notes = input("Please Enter Any Notes For This Service Request: ")
 
@@ -471,29 +453,28 @@ Please Enter In MM/DD/YYYY Format: """)
                     while cancel:
                         print('')
 
-    # NEW - Bianca - Error-handling for invalid menu selection.
                         service_selection = True
                         while service_selection:
                             try:
                                 service_idx = int(input(f"""Please provide the Service ID of the service you wish to cancel.
 
-
 ENTER: """))
                                 valid_service_id = check_id(session, Service, service_idx)
                                 if valid_service_id:
-                                    service_ids = []
-                                    for service in services:
-                                        if service.pet_id == pet.id:
-                                            service_ids.append(service.id)
-                                    if service_idx in service_ids:
-                                        service_selection = False
-                                    else:
-                                        print("Invalid ID. Please try again.")
+                                # TODO - debug this code.    
+                                # service_ids = []
+                                #     for service in services:
+                                #         if service.pet_id == pet.id:
+                                #             service_ids.append(service.id)
+                                #     if service_idx in service_ids:
+                                    service_selection = False
+                                #     else:
+                                #         print("Invalid ID. Please try again.")
                                 else:
                                     print("Invalid ID. Please try again.")
                             except ValueError:
                                 print("Invalid ID. Please try again.")
-    # END - Bianca - Error-handling for invalid menu selection.
+
                         service = session.query(Service).filter(Service.id == service_idx).first()
                         print(line_db)
                         print(service)
@@ -549,6 +530,4 @@ ENTER: """))
         else:
             print("Please enter a valid input.")
 
-    # print('Thank you for using the Wagging Rights CLI!\n ')
-    # Add loop for pet menu.
 
