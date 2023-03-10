@@ -307,8 +307,10 @@ ENTER: """))
                             print('')
                             print(appointment_table.to_string())
                             print(line)
-
-                request = int(input("""
+                appointment_task_select = True
+                while appointment_task_select:
+                    try:
+                        request = int(input("""
 Please Enter:
 
     1 - Request A New Appointment
@@ -318,6 +320,12 @@ Please Enter:
 
 ENTER: """))
 # NEW REQUEST START
+                        if request in [1, 2, 3, 4]:
+                            appointment_task_select = False
+                        else:
+                            print("Invalid selection. Please try again.")
+                    except ValueError:
+                        print("Invalid selection. Please try again.")
 
                 if request == 1:
                     print('')
