@@ -178,21 +178,18 @@ ENTER: """)
 6 - Notes
 
 ENTER: """))
-                            if field.isdigit() and int(field) >= 1 and int(field) <= 6:
-                                print(f"""Invalid entry. Please enter a number between 1 and 6.""")
-                                continue
-                            else:
-                                new_value = input(f"""Enter the new value for {field}:
+                            fields = {1: "Name", 2: "Age", 3: "Breed", 4: "Temperament", 5: "Treats", 6: "Notes"}
+                            new_value = input(f"""Enter the new value for {fields[field]}.
 
 ENTER: """)
-                                update_pet(session, pet, field, new_value)
-                                print_pet(pet)
-                                yes_no = input("Would you like to update another pet? Yes/No: ").lower()
-                                if yes_no.lower() in YES:
-                                    continue
-                                elif yes_no.lower() in NO:
-                                    print("Routing you back to the main menu...")
-                                    update = False
+                            update_pet(session, pet, fields[field].lower(), new_value)
+                            print_pet(pet)
+                            yes_no = input("Would you like to update another pet? Yes/No: ").lower()
+                            if yes_no.lower() in YES:
+                                continue
+                            elif yes_no.lower() in NO:
+                                print("Routing you back to the main menu...")
+                                update = False
 
 #"UPDATE OPTION" END.
 
