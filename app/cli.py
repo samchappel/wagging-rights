@@ -420,7 +420,14 @@ Please Enter In MM/DD/YYYY Format: """)
 ENTER: """))
                                 valid_service_id = check_id(session, Service, service_idx)
                                 if valid_service_id:
-                                    service_selection = False
+                                    service_ids = []
+                                    for service in services:
+                                        if service.pet_id == pet.id:
+                                            service_ids.append(service.id)
+                                    if service_idx in service_ids:
+                                        service_selection = False
+                                    else:
+                                        print("Invalid ID. Please try again.")
                                 else:
                                     print("Invalid ID. Please try again.")
                             except ValueError:
