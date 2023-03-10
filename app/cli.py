@@ -418,10 +418,14 @@ Please Enter In MM/DD/YYYY Format: """)
                                 service_idx = int(input(f"""Please Provide The 'Service ID' Of The Service You Wish To Cancel:
 
 ENTER: """))
-                                service_selection = False
+                                valid_service_id = check_id(session, Service, service_idx)
+                                if valid_service_id:
+                                    service_selection = False
+                                else:
+                                    print("Invalid ID. Please try again.")
                             except ValueError:
                                 print("Invalid ID. Please try again.")
-
+    # END - Bianca - Error-handling for invalid menu selection.
                         service = session.query(Service).filter(Service.id == service_idx).first()
                         print(line_db)
                         print(service)
