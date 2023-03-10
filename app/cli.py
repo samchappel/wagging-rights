@@ -154,10 +154,6 @@ Would you like to add another pet? Y/N: """).lower()
                                 pet_id = int(input(f"""You've selected update! Enter the ID of the pet you want to update or enter 0 to go back.
 
 ENTER: """))
-                                # MERGE NOTE - CHECK THAT THIS STILL WORKS.
-                                # if pet_id == 0:
-                                #     update = False
-                                #     continue
                                 pet_selection = False
                             except ValueError:
                                 print("Invalid ID. Please try again.")
@@ -214,19 +210,17 @@ ENTER: """)
                                 pet_idx = int(input(f"""Please provide a valid Pet ID of the pet you wish to remove or enter 0 to go back.
 
 ENTER: """))
-                                # MERGE NOTE - CHECK THAT THIS IS STILL WORKING.
-                                if pet_idx == 0:
-                                  remove = False
-                                  continue
                                 valid_pet_id = check_id(session, Pet, pet_idx)
-                                if valid_pet_id:
+                                if valid_pet_id or pet_idx == 0:
                                     pet_selection = False
                                 else:
                                     print("Invalid ID. Please try again.")
                             except ValueError:
                                 print("Invalid ID. Please try again.")
     # END - Bianca - Add error-handling for invalid pet_id.
-
+                        if pet_idx == 0:
+                            remove = False
+                            continue
                         pets = session.query(Pet).filter(Pet.id == pet_idx).first()
                         #TERRENCENOTE: if no pets.owner_id matches with owner_id print "no pets to remove"
                         #return them back to pet_menu
