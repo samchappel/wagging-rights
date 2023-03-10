@@ -286,7 +286,12 @@ ENTER: """).lower()
                             id = int(input("Enter ID Of Pet You Would Like To Schedule For: "))
                             valid_pet_id = check_id(session, Pet, id)
                             if valid_pet_id:
-                                pet_selection = False
+                                owners_pets = session.query(Pet.id).filter(Pet.owner_id == owner_id).all()
+                                owners_pets_ids = [id[0] for id in owners_pets]
+                                if id in owners_pets_ids:
+                                    pet_selection = False
+                                else:
+                                    print("Invalid ID. Please try again.")
                             else:
                                 print("Invalid ID. Please try again.")
                                 
