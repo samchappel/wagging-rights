@@ -4,9 +4,10 @@ from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 
 from datetime import datetime
-import colorama
-
 from models import Owner, Pet, Provider, Service
+
+import colorama
+import pandas as pd
 
 from helpers import update_pet, print_pet, add_new_pet, query_pets, create_new_dropwalk, book_house_sitting
 
@@ -61,6 +62,8 @@ ENTER: """))
 #MAIN MENU" START:
     main_menu = True
     while main_menu:
+
+#work: ONE-DIMENSIONAL ARRAY pet - View Profile, use pandas
         task = input(f"""
     pet - View Your Pet Profile(s)
     appointment - Book An Appointment
@@ -77,16 +80,18 @@ ENTER: """).lower()
                 # Use owner_id to query Pets table and return all pets associated with that owner.
                 pets = session.query(Pet).filter(Pet.owner_id == owner_id).all()
                 for pet in pets:
-                    print(pet)
+                    pet_table = pd.Series([pet.id,pet.name,pet.age,pet.breed,pet.temperament,pet.favorite_treats,pet.notes,pet.owner_id], index=['Pet ID','Pet Name','Pet Age','Pet Breed','Pet Temperament','Pet Treats','Pet Notes','Pet Owner ID'])
+                    print(pet_table.to_string() + '\n' +line)
                 # Prompt user to select from options to Add Pet, Update Pet, Remove Pet
-                option = input("""Please Enter:
+#work: use pandas one-dimensional
+                option = int(input("""Please Enter:
 
     add - Add A Pet
     update - Update A Pet
     remove - Remove A Pet
-    back - Return to Task Menu
+    0 - Return to Task Menu
 
-ENTER: """).lower() #TERRENCENOTE: 'return' want to change to 'Return'
+ENTER: """)) #TERRENCENOTE: 'return' want to change to 'Return'
 
 #"ADD OPTION" START:
                 if option == "add":
@@ -97,6 +102,7 @@ ENTER: """).lower() #TERRENCENOTE: 'return' want to change to 'Return'
                         print("Please Provide Information About Your New Pet!")
                         print(line)
                         print('')
+#work: lines 105-110 use pandas
                         name = input("Name: ")
                         age = int(input("Age: "))
                         breed = input("Breed: ")
@@ -120,12 +126,15 @@ Would you like to add another pet? Yes/No: """).lower()
                     update = True
                     while update:
                         print(line)
-                        pet_id = int(input(f"""You've Selected Update! Enter The ID Of The Pet You Want To Update:
+                        pet_id = int(input(f"""You've selected update! Enter the id of the pet you want to update or enter 0 to go back.
 
 ENTER: """))
+                        if pet_id == 0:
+                            update = False
+                            continue
                         pet = session.query(Pet).filter(Pet.id == pet_id, Pet.owner_id == owner_id).first()
                         if not pet:
-                            print(f"""Invalid ID. Please enter a valid ID that belongs to your pet.
+                            print(f"""Invalid ID. Please enter a valid ID that belongs to your pet or enter 0 to go back.
 
 ENTER: """)
                             continue
@@ -158,9 +167,12 @@ ENTER: """)
                     remove = True
                     while remove:
                         print('')
-                        pet_idx = int(input(f"""Please Provide A Valid 'Pet ID' Of The Pet You Wish To Remove:
+                        pet_idx = int(input(f"""Please provide a valid 'pet id' of the pet you wish to remove or enter 0 to go back.
 
 ENTER: """)) #TERRENCENOTE: maybe allow user to go back to pet_menu if they change their minds on removing a pet.
+                        if pet_idx == 0:
+                            remove = False
+                            continue
                         pets = session.query(Pet).filter(Pet.id == pet_idx).first()
                         #TERRENCENOTE: if no pets.owner_id matches with owner_id print "no pets to remove"
                         #return them back to pet_menu
@@ -190,7 +202,7 @@ ENTER: """)) #TERRENCENOTE: maybe allow user to go back to pet_menu if they chan
 
 
 #"BACK OPTION" START:
-                elif option == 'back':
+                elif option == '0':
                     pet_menu = False
 #"BACK OPTION" END.
 
@@ -208,32 +220,36 @@ ENTER: """)) #TERRENCENOTE: maybe allow user to go back to pet_menu if they chan
             appointment_menu = True
             while appointment_menu:
                 print(line_db)
-                print("Your Pets With Upcoming Bookings:")
+                print("Your upcoming bookings:")
                 print(line_db)
                 query = session.query(Pet).filter(Pet.owner_id == owner_id).all()
                 pets = [pet for pet in query]
-                for pet in pets:
-                    print(pet.name)
                 print(f'Appointment(s): ')
                 for pet in pets:
                     services = session.query(Service).filter(Service.pet_id == pet.id).all()
                     for service in services:
                         if service.pet_id == pet.id:
+                            # service_data = {'Service ID':[service.id], 'Request':[service.request], 'Start Date':[service.start_date], 'End Date':[service.end_date], 'Fee':[service.fee],'Notes':[service.notes]}
+                            # service_df = pd.DataFrame(service_data, columns=['Service ID', 'Request','Start Date', 'End Date', 'Fee', 'Notes'])
+                            appointment_table = pd.Series([service.id,service.request,service.start_date,service.end_date,service.fee,service.notes], index = ['Service ID','Service Request','Service Start Date','Service End Date','Service Fee','Service Notes'])
                             print('')
-                            print(service)
+                            print(appointment_table.to_string())
                             print(line)
-                request = input("""
+# work: use pandas line 234:237
+                app_menu = pd.DataFrame({'': [ 'Back To Main Menu','Request A New Appointment','Cancel An Appointment','View Providers',]}, index=[0,1,2,3,], columns= None)
+                request = int(input(f"""
 Please Enter:
 
-    new - Request A New Appointment
-    cancel - Cancel An Appointment
-    view - View A List Of Our Providers
-    back - Go Back To Main Menu
+{app_menu.to_string()}
 
-ENTER: """).lower()
+ENTER: """))
+    # new - Request A New Appointment
+    # cancel - Cancel An Appointment
+    # view - View A List Of Our Providers
+    # back - Go Back To Main Menu
+
 # NEW REQUEST START
-
-                if request == "new":
+                if request == 1:
                     print('')
                     print("Which pet are you scheduling this appointment for?")
                     print('')
@@ -242,13 +258,19 @@ ENTER: """).lower()
 
                     name = session.query(Pet.name).filter(Pet.id == id).first()[0]
 
-                    appt_type = int(input(f"""What Type Of Appointment Are You Scheduling for {name}?
-PLEASE ENTER:
-1 - Drop-in,
-2 - Walking,
-3 - House-sitting
+#work: use pandas line 254-256 DONE
+                    app_table = pd.Series(['Go Back','Drop-in', 'Walking', 'House-sitting'],index=[0,1,2,3])
+                    appt_type = int(input(f"""
+Please enter the id of the appointment you want to schedule for {name}.
+
+{app_table.to_string()}
 
 ENTER: """))
+
+# PLEASE ENTER:
+# 1 - Drop-in,
+# 2 - Walking,
+# 3 - House-sitting
 
                     fees = {"Drop-In": 50, "Walking": 35, "House-Sitting": 70}
 
@@ -317,7 +339,7 @@ Please Enter In MM/DD/YYYY Format: """)
 
 
 #"CANCEL REQUEST" START:
-                elif request == "cancel":
+                elif request == 2:
                     cancel = True
                     while cancel:
                         print('')
@@ -354,12 +376,12 @@ ENTER: ''')
 
 
 #"VIEW PROVIDERS" START:
-                elif request == "view":
+                elif request == 3:
                     view = True
                     while view:
                         print('')
                         providers = session.query(Provider).all()
-                        print('-'*50)
+                        print(line)
                         print('')
                         print("Available Providers:")
                         print('')
@@ -372,8 +394,9 @@ ENTER: ''')
 #"VIEW PROVIDERS" END
 
 #GO BACK
-                elif request == "back":
+                elif request == 0:
                     appointment_menu = False
+                    continue
 
 #If Invalid Input
         else:
