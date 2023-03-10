@@ -53,8 +53,9 @@ def create_new_dropwalk(session, pet_id, request, start_date, fee, notes):
     session.add(new_appt)
     session.commit()
     new_db_appt = session.query(Service).filter(Service.id == new_appt.id).first()
-    print(f"Thank You! Here Is The Appointment Information We Received: {new_db_appt}")
-    print("Your Appointment Is Pending Until Reviewed By A Provider.")
+    print(f"""Thank you! Here is the appointment information we received: 
+{new_db_appt}""")
+    print("Your appointment is pending until reviewed by a provider.")
 
 def book_house_sitting(session, pet_id, start_date, end_date, notes):
     start_datetime = datetime.combine(start_date, time.min)
@@ -76,8 +77,9 @@ def book_house_sitting(session, pet_id, start_date, end_date, notes):
         session.add(service)
         session.commit()
         # print the details of the newly added service object
-        print(f"Thank You! Here Is The Appointment Information We Received: {service}")
-        print("Your Appointment Is Pending Until Reviewed By A Provider.")
+        print(f"""Thank you! Here is the appointment information we received: 
+{service}""")
+        print("Your appointment is pending until reviewed by a provider.")
 
     except Exception as e:
         # print any errors that occur during the commit process
