@@ -1,5 +1,5 @@
-from sqlalchemy import create_engine, func
-from sqlalchemy import (PrimaryKeyConstraint, Table, Column, String, Integer, DateTime, ForeignKey)
+from sqlalchemy import create_engine
+from sqlalchemy import (PrimaryKeyConstraint, Column, String, Integer, DateTime, ForeignKey)
 from sqlalchemy.orm import relationship, backref
 from sqlalchemy.ext.declarative import declarative_base
 
@@ -24,7 +24,7 @@ class Pet(Base):
 
     def __repr__(self):
         line = '-'*50
-        return f"Id: {self.id}, \n" \
+        return f"Pet ID: {self.id}, \n" \
             + f"Name: {self.name}, \n" \
             + f"Age: {self.age}, \n" \
             + f"Breed: {self.breed}, \n" \
@@ -49,7 +49,7 @@ class Owner(Base):
     pets = relationship('Pet', backref=backref('pet'))
 
     def __repr__(self):
-        return f"Id: {self.id}, "\
+        return f"Owner ID: {self.id}, "\
             + f"Name:{self.name}, "\
             + f"Email: {self.email}, "\
             + f"Phone: {self.phone}, "\
@@ -67,7 +67,7 @@ class Provider(Base):
     # hourly_rate = Column(String())
 
     def __repr__(self):
-        return f"Id: {self.id}, "\
+        return f"Provider ID: {self.id}, "\
             + f"Name:{self.name}, "\
             + f"Email: {self.email}, "\
             + f"Phone: {self.phone}, "\
@@ -92,10 +92,12 @@ class Service(Base):
 
     def __repr__(self):
         return f"Service ID: {self.id}, \n"\
+            +f"Pet ID: {self.pet_id}, \n"\
+            +f"Provider ID: {self.provider_id}, \n"\
             +f"Request: {self.request}, \n"\
             +f"Start Date: {self.start_date}, \n"\
             +f"End Date: {self.end_date}, \n"\
             +f"Fee: {self.fee}, \n"\
-            +f"Notes: {self.notes}, \n"\
+            +f"Notes: {self.notes} \n"\
 
 

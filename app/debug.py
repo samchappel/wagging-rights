@@ -1,8 +1,9 @@
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 import random
-from datetime import datetime, timedelta
+from datetime import timedelta
 
+# Models not currently being used but included here for convenience for future testing.
 from models import Pet, Owner, Provider, Service, Base
 from faker import Faker
 

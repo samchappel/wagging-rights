@@ -1,5 +1,5 @@
 from models import Pet, Service
-from datetime import datetime, timedelta, time
+from datetime import datetime, time
 
 def add_new_pet(session, name, age, breed, temperament, treats, notes, owner_id):
     new_pet = Pet(name=name, age=age, breed=breed, temperament=temperament,
@@ -53,8 +53,9 @@ def create_new_dropwalk(session, pet_id, request, start_date, fee, notes):
     session.add(new_appt)
     session.commit()
     new_db_appt = session.query(Service).filter(Service.id == new_appt.id).first()
-    print(f"Thank You! Here Is The Appointment Information We Received: {new_db_appt}")
-    print("Your Appointment Is Pending Until Reviewed By A Provider.")
+    print(f"""Thank you! Here is the appointment information we received: 
+{new_db_appt}""")
+    print("Your appointment is pending until reviewed by a provider.")
 
 def book_house_sitting(session, pet_id, start_date, end_date, notes):
     start_datetime = datetime.combine(start_date, time.min)
@@ -76,10 +77,18 @@ def book_house_sitting(session, pet_id, start_date, end_date, notes):
         session.add(service)
         session.commit()
         # print the details of the newly added service object
-        print(f"Thank You! Here Is The Appointment Information We Received: {service}")
-        print("Your Appointment Is Pending Until Reviewed By A Provider.")
+        print(f"""Thank you! Here is the appointment information we received: 
+{service}""")
+        print("Your appointment is pending until reviewed by a provider.")
 
     except Exception as e:
         # print any errors that occur during the commit process
         print(f"Error adding service to database: {e}")
         session.rollback()
+
+# NEW - Bianca - ID error handling helper function.
+def check_id(session, Table, integer):
+     db_ids = session.query(Table.id).all()
+     all_ids = [id[0] for id in db_ids]
+     return integer in all_ids
+# END - Bianca - Owner_ID error handling helper function.
