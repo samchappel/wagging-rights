@@ -9,6 +9,7 @@ alembic = "*"
 faker = "*"
 ipdb = "*"
 colorama = "*"
+pandas = "*"
 
 [dev-packages]
 
