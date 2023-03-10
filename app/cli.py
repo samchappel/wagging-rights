@@ -186,7 +186,10 @@ ENTER: """)
                             continue
                         else:
                             print('')
-                            field = int(input(f"""What updates would you like to make for {pet.name}? 
+                            field_selection = True
+                            while field_selection:
+                                try:
+                                    field = int(input(f"""What updates would you like to make for {pet.name}? 
 1 - Name 
 2 - Age 
 3 - Breed 
@@ -195,6 +198,12 @@ ENTER: """)
 6 - Notes
 
 ENTER: """))
+                                    if field in [1, 2, 3,  4, 5, 6]:
+                                        field_selection = False
+                                    else:
+                                        print("Invalid selection. Please try again.")
+                                except:
+                                    print("Invalid selection. Please try again.")
                             fields = {1: "Name", 2: "Age", 3: "Breed", 4: "Temperament", 5: "Treats", 6: "Notes"}
                             new_value = input(f"""Enter the new value for {fields[field]}.
 
