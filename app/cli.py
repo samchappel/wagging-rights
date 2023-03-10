@@ -104,8 +104,10 @@ ENTER: """))
                     pet_table = pd.Series([pet.id,pet.name,pet.age,pet.breed,pet.temperament,pet.favorite_treats,pet.notes,pet.owner_id], index=['Pet ID','Pet Name','Pet Age','Pet Breed','Pet Temperament','Pet Treats','Pet Notes','Pet Owner ID'])
                     print(pet_table.to_string() + '\n' +line)
                 # Prompt user to select from options to Add Pet, Update Pet, Remove Pet
-
-                option = int(input("""Please Enter:
+                pet_menu_selection = True
+                while pet_menu_selection:
+                    try:
+                        option = int(input("""Please Enter:
 
     1 - Add A Pet
     2 - Update A Pet
@@ -113,6 +115,12 @@ ENTER: """))
     4 - Return To Task Menu
 
 ENTER: """))
+                        if option in [1, 2, 3, 4]:
+                            pet_menu_selection = False
+                        else:
+                            print("Invalid selection. Please try again.")
+                    except ValueError:
+                        print("Invalid selection. Please try again.")
 
 #"ADD OPTION" START:
                 if option == 1:
