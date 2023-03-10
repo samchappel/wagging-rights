@@ -155,14 +155,16 @@ Would you like to add another pet? Y/N: """).lower()
 
 ENTER: """))
                                 # MERGE NOTE - CHECK THAT THIS STILL WORKS.
-                                if pet_id == 0:
-                                    update = False
-                                    continue
+                                # if pet_id == 0:
+                                #     update = False
+                                #     continue
                                 pet_selection = False
                             except ValueError:
                                 print("Invalid ID. Please try again.")
     # END - Bianca - Error-handling for invalid pet ids.
-
+                        if pet_id == 0:
+                            update = False
+                            continue
                         pet = session.query(Pet).filter(Pet.id == pet_id, Pet.owner_id == owner_id).first()
                         if not pet:
                             print(f"""Invalid ID. Please enter a valid ID that belongs to your pet or enter 0 to go back.
