@@ -1,5 +1,5 @@
-from models import Pet, Service, Owner
-from datetime import datetime, timedelta, time
+from models import Pet, Service
+from datetime import datetime, time
 
 def add_new_pet(session, name, age, breed, temperament, treats, notes, owner_id):
     new_pet = Pet(name=name, age=age, breed=breed, temperament=temperament,
