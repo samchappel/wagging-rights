@@ -45,10 +45,17 @@ if __name__ == '__main__':
 
     print("Welcome to Wagging Rights CLI!")
     print('')
-    # Ask user to input their ID number (corresponds with owner_id)
-    owner_id = int(input(f"""Please enter your owner ID to get started.
+    while True:
+        try:
+            # Ask user to input their ID number (corresponds with owner_id)
+            owner_id = int(input("""Please enter your Owner ID to get started.
 
 ENTER: """))
+            break
+        except ValueError:
+            print("Please enter a valid Owner ID.")
+
+    # Ask user to input their ID number (corresponds with owner_id)
     # Use owner_id to query Owners table and return owner name.
     owner_name = session.query(Owner.name).filter(Owner.id == owner_id).first()[0].split(" ")[0]
     # Print Welcome, {Name} and prompt them to input whether they would like to manage pets or appointments.
@@ -61,11 +68,11 @@ ENTER: """))
 #MAIN MENU" START:
     main_menu = True
     while main_menu:
-        task = input(f"""
+        task = int(input(f"""
     1 - View Your Pet Profile(s)
     2 - Book An Appointment
 
-ENTER: """)
+ENTER: """))
 
 #"PET MENU" START:
         if task == 1:
@@ -79,14 +86,14 @@ ENTER: """)
                 for pet in pets:
                     print(pet)
                 # Prompt user to select from options to Add Pet, Update Pet, Remove Pet
-                option = input("""Please Enter:
+                option = int(input("""Please Enter:
 
     1 - Add A Pet
     2 - Update A Pet
     3 - Remove A Pet
     4 - Return To Task Menu
 
-ENTER: """)
+ENTER: """))
 
 #"ADD OPTION" START:
                 if option == 1:
@@ -131,7 +138,7 @@ ENTER: """)
                             continue
                         else:
                             print('')
-                            field = input(f"""What updates would you like to make for {pet.name}? 
+                            field = int(input(f"""What updates would you like to make for {pet.name}? 
 1 - Name 
 2 - Age 
 3 - Breed 
@@ -139,7 +146,7 @@ ENTER: """)
 5 - Treats
 6 - Notes
 
-ENTER: """)
+ENTER: """))
                             if field.isdigit() and int(field) >= 1 and int(field) <= 6:
                                 print(f"""Invalid entry. Please enter a number between 1 and 6.""")
                                 continue
@@ -226,7 +233,7 @@ ENTER: """))
                             print('')
                             print(service)
                             print(line)
-                request = input("""
+                request = int(input("""
 Please Enter:
 
     1 - Request A New Appointment
@@ -234,7 +241,7 @@ Please Enter:
     3 - View A List Of Our Providers
     4 - Go Back To Main Menu
 
-ENTER: """).lower()
+ENTER: """))
 # NEW REQUEST START
 
                 if request == 1:
@@ -341,7 +348,7 @@ ENTER: """))
                             print(line_db)
                             print('Your service has been removed successfully!')
                             print('')
-                            rem_another = input(f'Would Yyu like to remove another service? (Y/N): ')
+                            rem_another = input(f'Would You like to remove another service? (Y/N): ')
                             if rem_another.lower() in YES:
                                 continue
                             elif rem_another.lower() in NO:
