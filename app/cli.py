@@ -366,18 +366,28 @@ ENTER: """) + ":00"
 
                     elif appt_type == 3:
                         print("You Selected House-Sitting, which costs $70 per day.")
-                        start_date_str = input("""What Date Would You Like This Service To Start?
+    # NEW - Bianca - Add error-handling for invalid date/time entry.
+                        datetime_entry = True
+                        while datetime_entry:
+                            try:
+                                start_date_str = input("""What Date Would You Like This Service To Start?
 Please Enter In MM/DD/YYYY Format: """)
 
-                        print(f"You've selected to book house-sitting beginning {start_date_str}.")
+                                print(f"You've selected to book house-sitting beginning {start_date_str}.")
 
-                        end_date_str = input("""What Date Would You Like This Service To End?
+                                end_date_str = input("""What Date Would You Like This Service To End?
 Please Enter In MM/DD/YYYY Format: """)
 
-                        print(f"You've selected to book house-sitting through {end_date_str}.")
+                                print(f"You've selected to book house-sitting through {end_date_str}.")
 
-                        start_date = datetime.strptime(start_date_str, "%m/%d/%Y").date()
-                        end_date = datetime.strptime(end_date_str, "%m/%d/%Y").date()
+                                start_date = datetime.strptime(start_date_str, "%m/%d/%Y").date()
+                                end_date = datetime.strptime(end_date_str, "%m/%d/%Y").date()
+
+                                print(f"Appointment Date/Time Selection - Start: {start_date}, End: {end_date}")
+                                datetime_entry = False
+                            except ValueError:
+                                print("Something went wrong. Please try again.")
+    # END - Bianca - Add error-handling for invalid date/time entry.
 
                         notes = input("Please Enter Any Notes For This Service Request: ")
 
