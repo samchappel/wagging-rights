@@ -75,12 +75,21 @@ ENTER: """))
 #MAIN MENU" START:
     main_menu = True
     while main_menu:
-
-        task = int(input(f"""
+        task_selection = True
+        while task_selection:
+            try:
+                task = int(input(f"""
     1 - View Your Pet Profile(s)
     2 - Book An Appointment
 
 ENTER: """))
+                if task in [1, 2]:
+                    task_selection = False
+                else:
+                    print("Invalid selection. Please try again.")
+            except ValueError:
+                print("Invalid selection. Please try again.")
+
 
 #"PET MENU" START:
         if task == 1:
