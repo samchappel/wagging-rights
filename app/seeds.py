@@ -8,7 +8,8 @@ import random
 
 if __name__ == '__main__':
     engine = create_engine('sqlite:///wagging_rights.db')
-    fake = Faker()
+    fake = Faker('fr_FR')
+    fake_es = Faker('es_ES')
     Session = sessionmaker(bind=engine)
     session = Session()
 
@@ -27,7 +28,7 @@ if __name__ == '__main__':
     owners = []
     for _ in range(30):
         owner = Owner(
-            name = f"{fake.first_name()} {fake.last_name()}",
+            name = fake.name(),
             email = fake.email(),
             phone = random.randint(1000000000, 9999999999),
             address = fake.address()
@@ -41,12 +42,12 @@ if __name__ == '__main__':
     for owner in owners:
         for _ in range (random.randint(1,3)):
             pet = Pet(
-                name = fake.first_name(),
+                name = fake_es.first_name(),
                 age = random.randint(1,10),
                 breed = random.choice(dog_breeds),
                 temperament = random.choice(temperaments),
                 favorite_treats = random.choice(favorite_treats),
-                notes = fake.sentence(),
+                notes = fake_es.sentence(),
                 owner_id = owner.id,
             )
             session.add(pet)
